@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Vítězslav Dvořák <cybervitexus@gmail.com>
 Build-Depends: debhelper-compat (= 13), python3
 Standards-Version: 4.7.0
-Homepage: https://github.com/VitexSoftware/ishtaria-web
+Homepage: https://git.vitexsoftware.com/Ishtaria/ishtaria-web
 Rules-Requires-Root: no
 
 Package: ishtaria-web
