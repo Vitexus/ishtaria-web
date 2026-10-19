@@ -30,7 +30,7 @@ with tempfile.TemporaryDirectory() as tmp:
             if not (f.parent / href).resolve().exists():
                 errors.append(f"{f.relative_to(out)}: broken link {href}")
     for lang in ("", "cs/"):
-        for page in ("index.html", "download.html"):
+        for page in ("index.html", "download.html", "play.html"):
             if not (out / lang / page).exists():
                 errors.append(f"missing {lang}{page}")
 

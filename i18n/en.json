@@ -55,5 +55,21 @@
   "dl_f_linux_x86": "Linux x86-64, standalone",
   "dl_f_linux_arm": "Linux arm64, standalone",
   "dl_f_windows": "Windows x86-64 (unsigned)",
-  "dl_f_macos": "macOS, Apple Silicon and Intel (unsigned)"
+  "dl_f_macos": "macOS, Apple Silicon and Intel (unsigned)",
+  "nav_play": "Play in browser",
+  "home_cta_play": "Play in your browser",
+  "play_title": "Play in your browser",
+  "play_lead": "The same client as the desktop game, built for the browser (HTML5 / WebAssembly). Nothing to install: enter the address of a world server and play.",
+  "play_server_label": "Server address",
+  "play_server_ph": "https://world.example",
+  "play_button": "Start the game",
+  "play_how_h": "How it works",
+  "play_how_p": "The page loads the client (a large download on the first visit, then it is cached) and connects to the server you name. The address is taken from the link, so a world can publish a ready link such as /play/?server=https://world.example.",
+  "play_https_h": "The server has to allow the browser",
+  "play_https_p": "A page served over https can only reach servers over https, and the server must answer browsers from this site: either the operator puts it behind this site's reverse proxy (then the link is /play/?server=/server) or it sends the headers a browser needs. A world that does neither cannot be played in the browser; use the desktop client for it.",
+  "play_limits_h": "Differences from the desktop client",
+  "play_limits_p": "The browser build uses the simpler WebGL 2 renderer, so the terrain and the sky look a little different, and it needs a recent browser and a GPU with WebGL 2. Only Debian and Ubuntu are supported for the desktop client; the browser build runs wherever the browser does, without support.",
+  "play_host_h": "Offering it from your own site",
+  "play_host_p": "The files come in the package ishtaria-client-web; the portal serves them under /play/ when it is installed.",
+  "pkg_ishtaria-client-web": "The game client for the browser (HTML5 / WebAssembly)."
 }

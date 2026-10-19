@@ -1,0 +1,47 @@
+# Example site for the Ishtaria portal on Apache2. Enable with:
+#   a2enmod headers expires mime        (proxy proxy_http too, if you publish a game server below)
+#   a2ensite ishtaria-web && systemctl reload apache2
+# Put TLS in front of it (certbot / mod_ssl) before exposing it publicly.
+<VirtualHost *:80>
+    ServerName ishtaria.example
+    DocumentRoot /usr/share/ishtaria-web/html
+
+    <Directory /usr/share/ishtaria-web/html>
+        Options -Indexes
+        Require all granted
+    </Directory>
+
+    # The browser (HTML5 / WebAssembly) client of the ishtaria-client-web package, if installed. A build without threads needs no
+    # special headers, but .wasm must be served as application/wasm to be compiled while it downloads.
+    Alias /play/ /usr/share/ishtaria-client-web/html/
+    <Directory /usr/share/ishtaria-client-web/html>
+        Options -Indexes
+        Require all granted
+        AddType application/wasm .wasm
+        AddType application/octet-stream .pck
+        # The files are large and change only with a new package: let browsers keep them for an hour.
+        <IfModule mod_headers.c>
+            Header set Cache-Control "public, max-age=3600"
+        </IfModule>
+        <IfModule mod_deflate.c>
+            AddOutputFilterByType DEFLATE text/html text/javascript application/javascript application/wasm
+        </IfModule>
+    </Directory>
+
+    # A game server for the browser client on THIS origin, so that it needs no CORS and no mixed content: the link is
+    # /play/?server=/server. Uncomment (needs mod_proxy and mod_proxy_http) and point it at your server.
+    #ProxyPass        /server/ http://127.0.0.1:7400/
+    #ProxyPassReverse /server/ http://127.0.0.1:7400/
+    #LimitRequestBody 1048576
+
+    # Documentation from the ishtaria-doc package, if installed.
+    Alias /doc/ishtaria-doc/ /usr/share/doc/ishtaria-doc/
+    <Directory /usr/share/doc/ishtaria-doc>
+        Require all granted
+    </Directory>
+
+    <IfModule mod_headers.c>
+        Header always set X-Content-Type-Options nosniff
+        Header always set Referrer-Policy no-referrer
+    </IfModule>
+</VirtualHost>

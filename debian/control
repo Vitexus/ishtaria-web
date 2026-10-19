@@ -11,10 +11,12 @@ Package: ishtaria-web
 Architecture: all
 Depends: ${misc:Depends}
 Recommends: nginx | httpd, ishtaria-doc
+Suggests: ishtaria-client-web
 Description: web portal of the Ishtaria virtual planet
  Static website with the introduction of Ishtaria and download
  instructions for its Debian packages, in English and Czech.
  .
- The site is installed under /usr/share/ishtaria-web/html. An example
- nginx site is provided in /etc/nginx/sites-available/ishtaria-web but
- is not enabled automatically.
+ The site is installed under /usr/share/ishtaria-web/html. Example
+ sites for nginx (/etc/nginx/sites-available/ishtaria-web) and for Apache2
+ (/etc/apache2/sites-available/ishtaria-web.conf) are provided but are not
+ enabled automatically.

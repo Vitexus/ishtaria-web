@@ -20,6 +20,12 @@ Any imagery must come from the approved sources listed in the workspace `AGENTS.
 | `tests/check.py` | i18n key parity, every package described, no broken local links |
 | `debian/` | Packaging, example nginx site, Jenkinsfile |
 
+The page `play.html` ("Play in your browser") posts a server address to `/play/`, where nginx serves the files of the package
+`ishtaria-client-web` (the browser build of the client, see its README); `debian/nginx-site` (nginx) and `debian/apache2-site` (Apache2, the live site
+ishtaria.vitexsoftware.com) have that location and, commented out,
+a `/server/` proxy for a game server on the same origin (`/play/?server=/server`: no CORS, no mixed content). Without the
+package installed `/play/` answers 404.
+
 Adding a package to the download table: add it to `packages` in `site.json` and a `pkg_<name>`
 text to **both** language files, then `make test`.
 
@@ -40,9 +46,10 @@ sudo apt update
 sudo apt install ishtaria-web
 ```
 
-The site lands in `/usr/share/ishtaria-web/html`. An example nginx site is installed as
-`/etc/nginx/sites-available/ishtaria-web` (a conffile, not enabled automatically). Enable it,
-and put TLS in front before exposing it. It also serves `/doc/ishtaria-doc/` from the
+The site lands in `/usr/share/ishtaria-web/html`. Example sites are installed for nginx
+(`/etc/nginx/sites-available/ishtaria-web`) and for Apache2
+(`/etc/apache2/sites-available/ishtaria-web.conf`; `a2enmod headers mime`, then `a2ensite ishtaria-web`),
+conffiles that are not enabled automatically. Enable one and put TLS in front before exposing it. It also serves `/doc/ishtaria-doc/` from the
 `ishtaria-doc` package when installed; the portal's "Documentation" link points there.
 
 ## Package build

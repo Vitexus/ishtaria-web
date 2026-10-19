@@ -13,6 +13,7 @@
   ],
   "packages": [
     "ishtaria-client",
+    "ishtaria-client-web",
     "ishtaria-server",
     "ishtaria-admin",
     "ishtaria-worldgen",
@@ -49,5 +50,8 @@
         "label": "dl_f_macos"
       }
     ]
+  },
+  "web_client": {
+    "path": "/play/"
   }
 }

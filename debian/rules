@@ -12,6 +12,7 @@ override_dh_auto_install:
 	install -d debian/ishtaria-web/usr/share/ishtaria-web
 	cp -r build/html debian/ishtaria-web/usr/share/ishtaria-web/html
 	install -D -m 0644 debian/nginx-site debian/ishtaria-web/etc/nginx/sites-available/ishtaria-web
+	install -D -m 0644 debian/apache2-site debian/ishtaria-web/etc/apache2/sites-available/ishtaria-web.conf
 
 override_dh_auto_clean:
 	rm -rf build

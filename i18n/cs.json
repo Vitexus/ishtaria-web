@@ -55,5 +55,21 @@
   "dl_f_linux_x86": "Linux x86-64, samostatný",
   "dl_f_linux_arm": "Linux arm64, samostatný",
   "dl_f_windows": "Windows x86-64 (nepodepsaný)",
-  "dl_f_macos": "macOS, Apple Silicon i Intel (nepodepsaný)"
+  "dl_f_macos": "macOS, Apple Silicon i Intel (nepodepsaný)",
+  "nav_play": "Hrát v prohlížeči",
+  "home_cta_play": "Hrát v prohlížeči",
+  "play_title": "Hrajte v prohlížeči",
+  "play_lead": "Stejný klient jako v počítačové hře, sestavený pro prohlížeč (HTML5 / WebAssembly). Nic neinstalujete: zadejte adresu serveru světa a hrajte.",
+  "play_server_label": "Adresa serveru",
+  "play_server_ph": "https://svet.example",
+  "play_button": "Spustit hru",
+  "play_how_h": "Jak to funguje",
+  "play_how_p": "Stránka načte klienta (při první návštěvě velké stahování, pak se uloží do mezipaměti) a připojí se k serveru, který zadáte. Adresa se bere z odkazu, takže svět může zveřejnit hotový odkaz, např. /play/?server=https://svet.example.",
+  "play_https_h": "Server musí prohlížeč pustit",
+  "play_https_p": "Stránka na https se dostane jen na servery přes https a server musí odpovídat prohlížečům z tohoto webu: buď ho provozovatel dá za reverzní proxy tohoto webu (odkaz pak je /play/?server=/server), nebo posílá hlavičky, které prohlížeč potřebuje. Svět, který nedělá ani jedno, v prohlížeči hrát nejde; použijte klienta pro počítač.",
+  "play_limits_h": "Rozdíly oproti klientu pro počítač",
+  "play_limits_p": "Verze pro prohlížeč používá jednodušší vykreslování WebGL 2, takže terén a obloha vypadají trochu jinak, a potřebuje novější prohlížeč s GPU s WebGL 2. Podporovaný je klient pro počítač na Debianu a Ubuntu; verze pro prohlížeč běží všude, kde běží prohlížeč, bez podpory.",
+  "play_host_h": "Nabídnout to na vlastním webu",
+  "play_host_p": "Soubory jsou v balíčku ishtaria-client-web; portál je po jeho instalaci poskytuje pod /play/.",
+  "pkg_ishtaria-client-web": "Herní klient pro prohlížeč (HTML5 / WebAssembly)."
 }

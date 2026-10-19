@@ -34,3 +34,7 @@ footer { color:var(--muted); font-size:.9rem; border-top:1px solid var(--line); 
 .shots img { width:100%; height:auto; border-radius:.6rem; border:1px solid var(--line); display:block; }
 .shots figcaption { font-size:.9rem; opacity:.8; margin-top:.4rem; }
 .shots { margin-bottom:1.5rem; }
+
+form input[type="text"] { font: inherit; padding: .5rem .6rem; max-width: 100%; margin: .25rem .5rem .25rem 0; }
+button.button { font: inherit; cursor: pointer; border: 0; }
+

@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-PAGES = ("index", "download")
+PAGES = ("index", "download", "play")
 LANGS = ("en", "cs")
 
 
@@ -25,7 +25,7 @@ def layout(t, site, lang, page, body):
     switch = f"{prefix}{page}.html" if lang == "cs" else f"cs/{page}.html"
     nav = "".join(
         f'<a href="{p}.html"{" aria-current=\"page\"" if p == page else ""}>{e(t[k])}</a>'
-        for p, k in (("index", "nav_home"), ("download", "nav_download"))
+        for p, k in (("index", "nav_home"), ("download", "nav_download"), ("play", "nav_play"))
     )
     return f"""<!doctype html>
 <html lang="{lang}">
@@ -66,7 +66,7 @@ def index(t, site):
     )
     return f"""<section class="hero"><h1>{e(t["home_title"])}</h1>
 <p class="lead">{e(t["home_lead"])}</p>
-<p><a class="button" href="download.html">{e(t["home_cta"])}</a></p></section>
+<p><a class="button" href="download.html">{e(t["home_cta"])}</a> <a class="button" href="play.html">{e(t["home_cta_play"])}</a></p></section>
 <section><h2>{e(t["feat_title"])}</h2><div class="grid">{feats}</div></section>
 <section><h2>{e(t["shots_title"])}</h2><div class="shots">
 <figure><img src="{prefix}screenshot-graveyard.jpg" alt="{e(t["shot_1_alt"])}" width="1200" height="675"><figcaption>{e(t["shot_1_alt"])}</figcaption></figure>
@@ -115,6 +115,18 @@ def download(t, site):
 <h2>{e(t["dl_req_h"])}</h2><p>{e(t["dl_req_p"])}</p>"""
 
 
+def play(t, site):
+    path = site["web_client"]["path"]
+    return f"""<h1>{e(t["play_title"])}</h1><p class="lead">{e(t["play_lead"])}</p>
+<form action="{e(path)}" method="get"><p><label for="server">{e(t["play_server_label"])}</label><br>
+<input id="server" name="server" type="text" size="40" maxlength="200" placeholder="{e(t["play_server_ph"])}" required>
+<button class="button" type="submit">{e(t["play_button"])}</button></p></form>
+<h2>{e(t["play_how_h"])}</h2><p>{e(t["play_how_p"])}</p>
+<h2>{e(t["play_https_h"])}</h2><p>{e(t["play_https_p"])}</p>
+<h2>{e(t["play_limits_h"])}</h2><p>{e(t["play_limits_p"])}</p>
+<h2>{e(t["play_host_h"])}</h2><p>{e(t["play_host_p"])}</p><pre><code>sudo apt install ishtaria-client-web</code></pre>"""
+
+
 def main():
     out = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "build" / "html"
     site = json.loads((ROOT / "site.json").read_text(encoding="utf-8"))
@@ -123,7 +135,7 @@ def main():
     (out / "cs").mkdir(parents=True)
     for asset in (ROOT / "static").iterdir():
         shutil.copy(asset, out / asset.name)
-    builders = {"index": index, "download": download}
+    builders = {"index": index, "download": download, "play": play}
     for lang in LANGS:
         t = json.loads((ROOT / "i18n" / f"{lang}.json").read_text(encoding="utf-8"))
         for page in PAGES:
