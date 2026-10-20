@@ -13,6 +13,8 @@
 
     # The browser (HTML5 / WebAssembly) client of the ishtaria-client-web package, if installed. A build without threads needs no
     # special headers, but .wasm must be served as application/wasm to be compiled while it downloads.
+    # Per-instance default API URL: edit /etc/ishtaria/client-web-config.js (window.ISHTARIA_SERVER_URL).
+    Alias /play/ishtaria-config.js /etc/ishtaria/client-web-config.js
     Alias /play/ /usr/share/ishtaria-client-web/html/
     <Directory /usr/share/ishtaria-client-web/html>
         Options -Indexes
@@ -27,9 +29,16 @@
             AddOutputFilterByType DEFLATE text/html text/javascript application/javascript application/wasm
         </IfModule>
     </Directory>
+    <Location "/play/ishtaria-config.js">
+        Require all granted
+        <IfModule mod_headers.c>
+            Header set Cache-Control "no-cache"
+        </IfModule>
+    </Location>
 
-    # A game server for the browser client on THIS origin, so that it needs no CORS and no mixed content: the link is
-    # /play/?server=/server. Uncomment (needs mod_proxy and mod_proxy_http) and point it at your server.
+    # A game server for the browser client on THIS origin, so that it needs no CORS and no mixed content: set
+    # window.ISHTARIA_SERVER_URL = "/server" in /etc/ishtaria/client-web-config.js (or use /play/?server=/server).
+    # Uncomment (needs mod_proxy and mod_proxy_http) and point it at your server.
     #ProxyPass        /server/ http://127.0.0.1:7400/
     #ProxyPassReverse /server/ http://127.0.0.1:7400/
     #LimitRequestBody 1048576

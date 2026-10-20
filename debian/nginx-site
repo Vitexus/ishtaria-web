@@ -15,6 +15,12 @@ server {
 
     # The browser (HTML5 / WebAssembly) client of the ishtaria-client-web package, if installed. A build without threads needs
     # no special headers; the .wasm must be served as application/wasm (nginx's mime.types has it).
+    # Per-instance default API URL: edit /etc/ishtaria/client-web-config.js (window.ISHTARIA_SERVER_URL).
+    location = /play/ishtaria-config.js {
+        alias /etc/ishtaria/client-web-config.js;
+        add_header Cache-Control "no-cache";
+        default_type application/javascript;
+    }
     location /play/ {
         alias /usr/share/ishtaria-client-web/html/;
         try_files $uri $uri/ =404;
@@ -22,8 +28,9 @@ server {
         gzip_static on;
     }
 
-    # A game server for the browser client on THIS origin, so that it needs no CORS and no mixed content: the link is
-    # /play/?server=/server. Uncomment and point it at your server (TLS belongs in front of this site).
+    # A game server for the browser client on THIS origin, so that it needs no CORS and no mixed content: set
+    # window.ISHTARIA_SERVER_URL = "/server" in /etc/ishtaria/client-web-config.js (or use /play/?server=/server).
+    # Uncomment and point it at your server (TLS belongs in front of this site).
     #location /server/ {
     #    proxy_pass http://127.0.0.1:7400/;
     #    proxy_set_header Host $host;
