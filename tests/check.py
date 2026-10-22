@@ -29,10 +29,16 @@ with tempfile.TemporaryDirectory() as tmp:
                 continue
             if not (f.parent / href).resolve().exists():
                 errors.append(f"{f.relative_to(out)}: broken link {href}")
+    launch = site["web_client"]["path"]
+    if site["web_client"].get("default_server"):
+        launch = f'{launch}?server={site["web_client"]["default_server"]}'
     for lang in ("", "cs/"):
         for page in ("index.html", "download.html", "play.html"):
             if not (out / lang / page).exists():
                 errors.append(f"missing {lang}{page}")
+        index_html = (out / lang / "index.html").read_text(encoding="utf-8")
+        if f'href="{launch}"' not in index_html:
+            errors.append(f"{lang}index.html: missing web-client launch link {launch}")
 
 if errors:
     print("\n".join(errors))

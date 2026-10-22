@@ -58,15 +58,26 @@ def layout(t, site, lang, page, body):
 """
 
 
+def web_client_launch(site):
+    """Absolute URL that opens the browser client against this site's default server."""
+    path = site["web_client"]["path"]
+    default = site["web_client"].get("default_server")
+    if not default:
+        return path
+    sep = "&" if "?" in path else "?"
+    return f"{path}{sep}server={default}"
+
+
 def index(t, site):
     prefix = "../" if t["lang"] == "cs" else ""
+    launch = web_client_launch(site)
     feats = "".join(
         f'<article><h3>{e(t[f"feat_{i}_h"])}</h3><p>{e(t[f"feat_{i}_p"])}</p></article>'
         for i in range(1, 5)
     )
     return f"""<section class="hero"><h1>{e(t["home_title"])}</h1>
 <p class="lead">{e(t["home_lead"])}</p>
-<p><a class="button" href="download.html">{e(t["home_cta"])}</a> <a class="button" href="play.html">{e(t["home_cta_play"])}</a></p></section>
+<p><a class="button" href="download.html">{e(t["home_cta"])}</a> <a class="button" href="{e(launch)}">{e(t["home_cta_play"])}</a></p></section>
 <section><h2>{e(t["feat_title"])}</h2><div class="grid">{feats}</div></section>
 <section><h2>{e(t["shots_title"])}</h2><div class="shots">
 <figure><img src="{prefix}screenshot-graveyard.jpg" alt="{e(t["shot_1_alt"])}" width="1200" height="675"><figcaption>{e(t["shot_1_alt"])}</figcaption></figure>
@@ -117,7 +128,15 @@ def download(t, site):
 
 def play(t, site):
     path = site["web_client"]["path"]
+    launch = web_client_launch(site)
+    open_here = ""
+    if site["web_client"].get("default_server"):
+        open_here = (
+            f'<p><a class="button" href="{e(launch)}">{e(t["play_open_here"])}</a></p>'
+            f'<p class="lead">{e(t["play_open_here_p"])}</p>'
+        )
     return f"""<h1>{e(t["play_title"])}</h1><p class="lead">{e(t["play_lead"])}</p>
+{open_here}
 <form action="{e(path)}" method="get"><p><label for="server">{e(t["play_server_label"])}</label><br>
 <input id="server" name="server" type="text" size="40" maxlength="200" placeholder="{e(t["play_server_ph"])}" required>
 <button class="button" type="submit">{e(t["play_button"])}</button></p></form>

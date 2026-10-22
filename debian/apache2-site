@@ -36,11 +36,14 @@
         </IfModule>
     </Location>
 
-    # A game server for the browser client on THIS origin, so that it needs no CORS and no mixed content: set
-    # window.ISHTARIA_SERVER_URL = "/server" in /etc/ishtaria/client-web-config.js (or use /play/?server=/server).
+    # A game server for the browser client on THIS origin, so that it needs no CORS and no mixed content.
+    # The portal links to /play/?server=/api by default (see site.json web_client.default_server).
     # Uncomment (needs mod_proxy and mod_proxy_http) and point it at your server.
-    #ProxyPass        /server/ http://127.0.0.1:7400/
-    #ProxyPassReverse /server/ http://127.0.0.1:7400/
+    # Also redirect bare /play/ so a visitor without ?server= does not hit localhost:
+    #   RewriteEngine On
+    #   RewriteRule ^/play/?$ /play/?server=/api [R=302,L,QSD]
+    #ProxyPass        /api/ http://127.0.0.1:7400/
+    #ProxyPassReverse /api/ http://127.0.0.1:7400/
     #LimitRequestBody 1048576
 
     # Documentation from the ishtaria-doc package, if installed.

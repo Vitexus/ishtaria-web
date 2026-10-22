@@ -1,3 +1,15 @@
+ishtaria-web (0.1.4) unstable; urgency=medium
+
+  * Release links for Ishtaria 0.3.0, Gilgamesh and tutorial datadisks, new documentation pages.
+
+ -- Vítězslav Dvořák <cybervitexus@gmail.com>  Thu, 22 Oct 2026 12:00:00 +0200
+
+ishtaria-web (0.1.3) unstable; urgency=medium
+
+  * Link the portal to the browser client (/play/?server=/api).
+
+ -- Vítězslav Dvořák <cybervitexus@gmail.com>  Wed, 21 Oct 2026 08:35:00 +0200
+
 ishtaria-web (0.1.2) unstable; urgency=medium
 
   * Add in-game screenshots to the home page.

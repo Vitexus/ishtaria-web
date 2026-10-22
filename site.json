@@ -19,6 +19,8 @@
     "ishtaria-worldgen",
     "ishtaria-content",
     "ishtaria-datadisk-endland",
+    "ishtaria-datadisk-gilgamesh",
+    "ishtaria-datadisk-tutorial",
     "ishtaria-protocol",
     "ishtaria-doc"
   ],
@@ -27,10 +29,10 @@
   },
   "release": {
     "repo": "https://git.vitexsoftware.com/Ishtaria/ishtaria-client/releases",
-    "tag": "v0.2.0",
+    "tag": "v0.3.0",
     "files": [
       {
-        "file": "ishtaria-client_0.2.0_amd64.deb",
+        "file": "ishtaria-client_0.3.0_amd64.deb",
         "label": "dl_f_deb"
       },
       {
@@ -52,6 +54,7 @@
     ]
   },
   "web_client": {
-    "path": "/play/"
+    "path": "/play/",
+    "default_server": "/api"
   }
 }
