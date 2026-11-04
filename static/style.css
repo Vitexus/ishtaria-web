@@ -60,3 +60,5 @@ body.lightbox-open { overflow:hidden; }
 
 .mapfig { display:block; }
 .mapfig figure { max-width:760px; margin:0 auto; }
+
+.muted { opacity:.75; font-size:.9rem; }

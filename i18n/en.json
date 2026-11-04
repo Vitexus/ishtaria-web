@@ -81,7 +81,7 @@
   "support_title": "Support the development",
   "support_p": "Ishtaria is built by a small team in its spare time and it is free to play. If you enjoy it, you can support the development on Patreon. Money is not the only way to help: report bugs, translate the game, write a story datadisk or send a patch (each repository has a CONTRIBUTING.md), and tell other players about it.",
   "support_cta": "Support on Patreon",
-  "support_code": "Contribute on Forgejo",
+  "support_code": "Source code on GitHub (secondary mirror)",
   "footer_support": "Support",
   "start_title": "Where to start",
   "start_p": "New here? These are real gaps in the current game, each a good first contribution. Ask in an issue before you begin a bigger one.",
@@ -103,5 +103,7 @@
   "map_p": "The world of the story as it is in the game: the Euphrates and the Tigris with their canals and tributaries, the cities of the Early Dynastic period and the roads between them. The map is drawn from the data of the Gilgamesh datadisk, so it grows with the game.",
   "map_alt": "The map of Sumer with the Euphrates, the Tigris, the cities (Uruk marked with a star), canals and roads.",
   "dl_f_windows": "Windows x86-64 (unsigned)",
-  "dl_f_macos": "macOS, Apple Silicon and Intel (unsigned)"
+  "dl_f_macos": "macOS, Apple Silicon and Intel (unsigned)",
+  "footer_source": "Primary source: git.vitexsoftware.com/Ishtaria (sign-in required). GitHub is a secondary mirror of the sources; packages and binaries are not built from GitHub.",
+  "dl_source_note": "The packages and binaries are built from the primary repository on git.vitexsoftware.com, not from GitHub. The release files on GitHub are copies of those builds."
 }

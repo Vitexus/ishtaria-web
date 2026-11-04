@@ -52,6 +52,7 @@ def layout(t, site, lang, page, body):
 {body}
 </main>
 <footer><p>{e(t["footer_license"])}</p>
+<p>{e(t["footer_source"])}</p>
 <p><a href="{e(site["github"])}">GitHub</a> · <a href="{e(site["patreon"])}" rel="noopener">Patreon – {e(t["footer_support"])}</a></p></footer>
 <script src="{prefix}lightbox.js" defer></script>
 </body>
@@ -126,6 +127,7 @@ def download(t, site):
         f'<div class="scroll"><table><thead><tr><th>{e(t["dl_col_file"])}</th><th>{e(t["dl_col_for"])}</th></tr></thead>'
         f'<tbody>{files}</tbody></table></div>'
         f'<p><a href="{e(rel["repo"])}/tag/{e(rel["tag"])}">{e(t["dl_all_releases"])}</a></p>'
+        f'<p class="muted">{e(t["dl_source_note"])}</p>'
     )
     return f"""<h1>{e(t["dl_title"])}</h1><p class="lead">{e(t["dl_lead"])}</p>
 <h2>{e(t["dl_step1_h"])}</h2><pre><code>{e(setup)}</code></pre>

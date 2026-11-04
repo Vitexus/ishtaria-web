@@ -1,7 +1,7 @@
 {
   "repo_url": "https://repo.vitexsoftware.com",
   "docs_url": "/doc/ishtaria-doc/html/index.html",
-  "github": "https://git.vitexsoftware.com/Ishtaria",
+  "github": "https://github.com/Vitexus",
   "play": [
     "ishtaria-client"
   ],
@@ -28,7 +28,7 @@
     "ishtaria-doc": "ishtaria-docs"
   },
   "release": {
-    "repo": "https://git.vitexsoftware.com/Ishtaria/ishtaria-client/releases",
+    "repo": "https://github.com/Vitexus/ishtaria-client/releases",
     "tag": "v0.5.1",
     "files": [
       {

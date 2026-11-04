@@ -81,7 +81,7 @@
   "support_title": "Podpořte vývoj",
   "support_p": "Ishtaria vzniká v malém týmu ve volném čase a hraje se zdarma. Pokud vás baví, můžete vývoj podpořit na Patreonu. Pomoci se dá i jinak než penězi: hlaste chyby, překládejte hru, napište příběhový datadisk nebo pošlete záplatu (každý repozitář má CONTRIBUTING.md) a řekněte o hře dalším hráčům.",
   "support_cta": "Podpořit na Patreonu",
-  "support_code": "Přispět na Forgejo",
+  "support_code": "Zdrojové kódy na GitHubu (sekundární zrcadlo)",
   "footer_support": "Podpora",
   "start_title": "Kde začít",
   "start_p": "Jste tu noví? Tohle jsou skutečné mezery dnešní hry, každá se hodí jako první příspěvek. U větší věci se raději nejdřív zeptejte v hlášení.",
@@ -103,5 +103,7 @@
   "map_p": "Svět příběhu tak, jak je ve hře: Eufrat a Tigris s kanály a přítoky, města raně dynastického období a cesty mezi nimi. Mapa se kreslí z dat datadisku Gilgameš, takže roste spolu s hrou.",
   "map_alt": "Mapa Sumeru s Eufratem, Tigridem, městy (Uruk označený hvězdou), kanály a cestami.",
   "dl_f_windows": "Windows x86-64 (nepodepsaný)",
-  "dl_f_macos": "macOS, Apple Silicon i Intel (nepodepsaný)"
+  "dl_f_macos": "macOS, Apple Silicon i Intel (nepodepsaný)",
+  "footer_source": "Primární zdroj: git.vitexsoftware.com/Ishtaria (vyžaduje přihlášení). GitHub je sekundární zrcadlo zdrojových kódů; balíčky a binárky se z GitHubu nesestavují.",
+  "dl_source_note": "Balíčky a binárky se sestavují z primárního repozitáře na git.vitexsoftware.com, ne z GitHubu. Soubory vydání na GitHubu jsou kopie těchto sestavení."
 }
