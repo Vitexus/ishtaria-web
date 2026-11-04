@@ -1,3 +1,11 @@
+ishtaria-web (0.2.7) unstable; urgency=medium
+
+  * Downloads from the GitHub mirror release 0.5.1; every page says that
+    git.vitexsoftware.com is the primary source and GitHub a secondary
+    mirror.
+
+ -- Vítězslav Dvořák <cybervitexus@gmail.com>  Wed, 04 Nov 2026 15:03:14 +0100
+
 ishtaria-web (0.2.6) unstable; urgency=medium
 
   * Downloads of client 0.5.1 (Debian package, Linux, Windows and macOS
