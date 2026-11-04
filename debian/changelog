@@ -1,3 +1,10 @@
+ishtaria-web (0.2.0) unstable; urgency=medium
+
+  * New screenshots of the Gilgamesh datadisk, a section about its
+    story, release links for Ishtaria 0.5.0.
+
+ -- Vítězslav Dvořák <cybervitexus@gmail.com>  Wed, 04 Nov 2026 05:44:41 +0100
+
 ishtaria-web (0.1.4) unstable; urgency=medium
 
   * Release links for Ishtaria 0.3.0, Gilgamesh and tutorial datadisks, new documentation pages.

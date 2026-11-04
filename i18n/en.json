@@ -48,7 +48,7 @@
   "pkg_ishtaria-doc": "Documentation in HTML.",
   "footer_license": "Server AGPL-3.0, code MIT, content and documentation CC BY-SA 4.0. Artwork credits are listed in the client.",
   "footer_lang": "Čeština",
-  "dl_direct_h": "Direct downloads (client v0.3.0)",
+  "dl_direct_h": "Direct downloads (client v0.5.0)",
   "dl_direct_p": "Standalone client builds from the release. The Debian package above is the supported way to install; the other builds are untested and the Windows and macOS builds are not code-signed, so expect a system warning.",
   "dl_col_file": "File",
   "dl_col_for": "For",
