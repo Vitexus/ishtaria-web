@@ -76,7 +76,7 @@
   "play_host_h": "Nabídnout to na vlastním webu",
   "play_host_p": "Soubory jsou v balíčku ishtaria-client-web; portál je po jeho instalaci poskytuje pod /play/.",
   "pkg_ishtaria-client-web": "Herní klient pro prohlížeč (HTML5 / WebAssembly).",
-  "story_title": "Příběh, kterým můžete projít",
+  "story_title": "Najděte nesmrtelnost",
   "story_p": "První plnohodnotný příběhový datadisk převypráví Epos o Gilgamešovi na rekonstruované raně dynastické Zemi. Začínáte jako lovec u napajedla a vydáte se do Uruku, hradbami obehnaného města nakresleného podle plánu skutečného: zikkuraty, tisíce domů, kanály, trhy a Eufrat. Obyvatelé Uruku mluví česky nebo anglicky a to, co vám říkají, odpovídá příběhu, který jste dosud prožili.",
   "shot_3_alt": "Přístav Uruku u říční brány, pohled z protějšího břehu Eufratu.",
   "shot_4_alt": "Rozhovor se starcem: každá postava má portrét a příběh se vypráví rozhodovacími stromy.",
@@ -97,5 +97,9 @@
   "start_7": "Umožněte postavě spát na položené podložce a dejte položeným předmětům kolize.",
   "start_8": "Veďte cesty z dalších bran Uruku do sousedních měst (nástroj generátoru už existuje, chybí jen úseky).",
   "start_9": "Přidejte do chatu blokování hráčů a žádosti o zprávu.",
-  "start_10": "Vylepšete testy: více integračních testů serveru s PostgreSQL, nebo vizuální kontroly oken klienta."
+  "start_10": "Vylepšete testy: více integračních testů serveru s PostgreSQL, nebo vizuální kontroly oken klienta.",
+  "shot_zoom": "Kliknutím zvětšíte",
+  "lightbox_close": "Zavřít",
+  "lightbox_prev": "Předchozí",
+  "lightbox_next": "Další"
 }

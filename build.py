@@ -53,6 +53,7 @@ def layout(t, site, lang, page, body):
 </main>
 <footer><p>{e(t["footer_license"])}</p>
 <p><a href="{e(site["github"])}">GitHub</a> · <a href="{e(site["patreon"])}" rel="noopener">Patreon – {e(t["footer_support"])}</a></p></footer>
+<script src="{prefix}lightbox.js" defer></script>
 </body>
 </html>
 """
@@ -72,7 +73,8 @@ def index(t, site):
     prefix = "../" if t["lang"] == "cs" else ""
     launch = web_client_launch(site)
     shots = "".join(
-        f'<figure><img src="{prefix}screenshot-{name}.jpg" alt="{e(t[f"shot_{i}_alt"])}" width="1200" height="675" loading="lazy">'
+        f'<figure><a class="zoom" href="{prefix}screenshot-{name}{"" if name == "quay" else "-full"}.jpg" title="{e(t["shot_zoom"])}">'
+        f'<img src="{prefix}screenshot-{name}.jpg" alt="{e(t[f"shot_{i}_alt"])}" width="1200" height="675" loading="lazy"></a>'
         f'<figcaption>{e(t[f"shot_{i}_alt"])}</figcaption></figure>'
         for i, name in enumerate(("uruk", "market", "quay", "dialogue", "map"), 1)
     )
@@ -86,7 +88,7 @@ def index(t, site):
 <p><a class="button" href="download.html">{e(t["home_cta"])}</a> <a class="button" href="{e(launch)}">{e(t["home_cta_play"])}</a></p></section>
 <section><h2>{e(t["feat_title"])}</h2><div class="grid">{feats}</div></section>
 <section><h2>{e(t["story_title"])}</h2><p class="lead">{e(t["story_p"])}</p></section>
-<section><h2>{e(t["shots_title"])}</h2><div class="shots">{shots}</div></section>
+<section><h2>{e(t["shots_title"])}</h2><div class="shots" data-close="{e(t["lightbox_close"])}" data-prev="{e(t["lightbox_prev"])}" data-next="{e(t["lightbox_next"])}">{shots}</div></section>
 <section><h2>{e(t["support_title"])}</h2><p class="lead">{e(t["support_p"])}</p>
 <p><a class="button" href="{e(site["patreon"])}" rel="noopener">{e(t["support_cta"])}</a> <a class="button" href="{e(site["github"])}">{e(t["support_code"])}</a></p></section>
 <section><h2>{e(t["start_title"])}</h2><p>{e(t["start_p"])}</p><ol class="start">{start}</ol></section>
