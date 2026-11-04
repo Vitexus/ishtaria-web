@@ -63,3 +63,5 @@ CI: `.github/workflows/ci.yml` and `debian/Jenkinsfile`.
 ## License
 
 MIT. Bundled third-party assets, if ever added, keep their own licenses.
+
+**Map of Sumer:** `static/sumer-map-<lang>.jpg` are copies of the maps drawn by `make sumer-map` in `ishtaria-datadisk-gilgamesh` (`maps/sumer.<lang>.png`). After the game has grown, redraw them there and convert them again (JPEG, quality 88) before a release.

@@ -89,6 +89,9 @@ def index(t, site):
 <section><h2>{e(t["feat_title"])}</h2><div class="grid">{feats}</div></section>
 <section><h2>{e(t["story_title"])}</h2><p class="lead">{e(t["story_p"])}</p></section>
 <section><h2>{e(t["shots_title"])}</h2><div class="shots" data-close="{e(t["lightbox_close"])}" data-prev="{e(t["lightbox_prev"])}" data-next="{e(t["lightbox_next"])}">{shots}</div></section>
+<section><h2>{e(t["map_title"])}</h2><p class="lead">{e(t["map_p"])}</p>
+<div class="shots mapfig" data-close="{e(t["lightbox_close"])}" data-prev="{e(t["lightbox_prev"])}" data-next="{e(t["lightbox_next"])}">
+<figure><a class="zoom" href="{prefix}sumer-map-{t["lang"]}.jpg" title="{e(t["shot_zoom"])}"><img src="{prefix}sumer-map-{t["lang"]}.jpg" alt="{e(t["map_alt"])}" width="1377" height="1466" loading="lazy"></a></figure></div></section>
 <section><h2>{e(t["support_title"])}</h2><p class="lead">{e(t["support_p"])}</p>
 <p><a class="button" href="{e(site["patreon"])}" rel="noopener">{e(t["support_cta"])}</a> <a class="button" href="{e(site["github"])}">{e(t["support_code"])}</a></p></section>
 <section><h2>{e(t["start_title"])}</h2><p>{e(t["start_p"])}</p><ol class="start">{start}</ol></section>

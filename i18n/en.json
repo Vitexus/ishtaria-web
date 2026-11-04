@@ -101,5 +101,8 @@
   "shot_zoom": "Click to enlarge",
   "lightbox_close": "Close",
   "lightbox_prev": "Previous",
-  "lightbox_next": "Next"
+  "lightbox_next": "Next",
+  "map_title": "The map of Sumer",
+  "map_p": "The world of the story as it is in the game: the Euphrates and the Tigris with their canals and tributaries, the cities of the Early Dynastic period and the roads between them. The map is drawn from the data of the Gilgamesh datadisk, so it grows with the game.",
+  "map_alt": "The map of Sumer with the Euphrates, the Tigris, the cities (Uruk marked with a star), canals and roads."
 }

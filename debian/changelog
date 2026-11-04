@@ -1,3 +1,9 @@
+ishtaria-web (0.2.4) unstable; urgency=medium
+
+  * The map of Sumer on the home page.
+
+ -- Vítězslav Dvořák <cybervitexus@gmail.com>  Wed, 04 Nov 2026 13:54:08 +0100
+
 ishtaria-web (0.2.3) unstable; urgency=medium
 
   * Screenshots open full screen on click; the story section is titled

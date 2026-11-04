@@ -57,3 +57,6 @@ body.lightbox-open { overflow:hidden; }
 .lightbox .lb-prev { left:1rem; top:50%; transform:translateY(-50%); }
 .lightbox .lb-next { right:1rem; top:50%; transform:translateY(-50%); }
 @media (max-width:600px) { .lightbox .lb-prev, .lightbox .lb-next { top:auto; bottom:1rem; transform:none; } }
+
+.mapfig { display:block; }
+.mapfig figure { max-width:760px; margin:0 auto; }

@@ -2,7 +2,8 @@
 (function () {
   var box = document.querySelector(".shots");
   if (!box) return;
-  var links = Array.prototype.slice.call(box.querySelectorAll("a.zoom"));
+  // every zoomable picture of the page, in the order of the page (the screenshots and the map)
+  var links = Array.prototype.slice.call(document.querySelectorAll(".shots a.zoom"));
   var overlay, image, caption, current = 0, opener = null;
 
   function build() {
