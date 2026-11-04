@@ -38,18 +38,6 @@
       {
         "file": "ishtaria-client.linux-x86_64",
         "label": "dl_f_linux_x86"
-      },
-      {
-        "file": "ishtaria-client.linux-arm64",
-        "label": "dl_f_linux_arm"
-      },
-      {
-        "file": "ishtaria-client.windows-x86_64.exe",
-        "label": "dl_f_windows"
-      },
-      {
-        "file": "ishtaria-client.macos.zip",
-        "label": "dl_f_macos"
       }
     ]
   },

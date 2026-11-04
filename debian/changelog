@@ -1,3 +1,10 @@
+ishtaria-web (0.2.5) unstable; urgency=medium
+
+  * Datadisk description with the counts of its content; the download
+    page lists only the files the release has.
+
+ -- Vítězslav Dvořák <cybervitexus@gmail.com>  Wed, 04 Nov 2026 14:02:18 +0100
+
 ishtaria-web (0.2.4) unstable; urgency=medium
 
   * The map of Sumer on the home page.
