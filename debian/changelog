@@ -1,3 +1,10 @@
+ishtaria-web (0.2.6) unstable; urgency=medium
+
+  * Downloads of client 0.5.1 (Debian package, Linux, Windows and macOS
+    builds); new Czech lead text.
+
+ -- Vítězslav Dvořák <cybervitexus@gmail.com>  Wed, 04 Nov 2026 14:17:07 +0100
+
 ishtaria-web (0.2.5) unstable; urgency=medium
 
   * Datadisk description with the counts of its content; the download

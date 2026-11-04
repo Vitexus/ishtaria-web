@@ -48,8 +48,8 @@
   "pkg_ishtaria-doc": "Documentation in HTML.",
   "footer_license": "Server AGPL-3.0, code MIT, content and documentation CC BY-SA 4.0. Artwork credits are listed in the client.",
   "footer_lang": "Čeština",
-  "dl_direct_h": "Direct downloads (client v0.5.0)",
-  "dl_direct_p": "Standalone client build from the release. The Debian package above is the supported way to install; the standalone Linux build is untested on other distributions, and builds for other platforms are not provided.",
+  "dl_direct_h": "Direct downloads (client v0.5.1)",
+  "dl_direct_p": "Standalone client builds from the release. The Debian package above is the supported way to install; the other builds are untested and the Windows and macOS builds are not code-signed, so expect a system warning.",
   "dl_col_file": "File",
   "dl_col_for": "For",
   "dl_all_releases": "All releases and notes",
@@ -101,5 +101,7 @@
   "lightbox_next": "Next",
   "map_title": "The map of Sumer",
   "map_p": "The world of the story as it is in the game: the Euphrates and the Tigris with their canals and tributaries, the cities of the Early Dynastic period and the roads between them. The map is drawn from the data of the Gilgamesh datadisk, so it grows with the game.",
-  "map_alt": "The map of Sumer with the Euphrates, the Tigris, the cities (Uruk marked with a star), canals and roads."
+  "map_alt": "The map of Sumer with the Euphrates, the Tigris, the cities (Uruk marked with a star), canals and roads.",
+  "dl_f_windows": "Windows x86-64 (unsigned)",
+  "dl_f_macos": "macOS, Apple Silicon and Intel (unsigned)"
 }

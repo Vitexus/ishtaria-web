@@ -29,15 +29,23 @@
   },
   "release": {
     "repo": "https://git.vitexsoftware.com/Ishtaria/ishtaria-client/releases",
-    "tag": "v0.5.0",
+    "tag": "v0.5.1",
     "files": [
       {
-        "file": "ishtaria-client_0.5.0_amd64.deb",
+        "file": "ishtaria-client_0.5.1_amd64.deb",
         "label": "dl_f_deb"
       },
       {
         "file": "ishtaria-client.linux-x86_64",
         "label": "dl_f_linux_x86"
+      },
+      {
+        "file": "ishtaria-client.windows-x86_64.exe",
+        "label": "dl_f_windows"
+      },
+      {
+        "file": "ishtaria-client.macos.zip",
+        "label": "dl_f_macos"
       }
     ]
   },

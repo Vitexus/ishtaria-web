@@ -6,7 +6,7 @@
   "nav_download": "Stáhnout",
   "nav_docs": "Dokumentace",
   "home_title": "Ishtaria – vlastní virtuální planeta",
-  "home_lead": "Prozkoumejte trvalou planetu s plně upravitelným avatarem. Každý server hostuje nezávislý svět; portály spojují světy, které si navzájem důvěřují.",
+  "home_lead": "Engine pro nejen váš vlastní virtuální svět.",
   "home_cta": "Stáhnout Ishtarii",
   "feat_title": "Co to je",
   "feat_1_h": "Autoritativní servery",
@@ -48,8 +48,8 @@
   "pkg_ishtaria-doc": "Dokumentace v HTML.",
   "footer_license": "Server AGPL-3.0, kód MIT, obsah a dokumentace CC BY-SA 4.0. Autory grafiky najdete v klientovi.",
   "footer_lang": "English",
-  "dl_direct_h": "Přímé stažení (klient v0.5.0)",
-  "dl_direct_p": "Samostatné sestavení klienta z vydání. Podporovaný způsob instalace je balíček pro Debian výše; samostatné sestavení pro Linux není otestované na jiných distribucích a sestavení pro další platformy neposkytujeme.",
+  "dl_direct_h": "Přímé stažení (klient v0.5.1)",
+  "dl_direct_p": "Samostatné sestavení klienta z vydání. Podporovaný způsob instalace je balíček pro Debian výše; ostatní sestavení nejsou otestovaná a buildy pro Windows a macOS nejsou podepsané, takže počítejte s varováním systému.",
   "dl_col_file": "Soubor",
   "dl_col_for": "Pro",
   "dl_all_releases": "Všechna vydání a poznámky",
@@ -101,5 +101,7 @@
   "lightbox_next": "Další",
   "map_title": "Mapa Sumeru",
   "map_p": "Svět příběhu tak, jak je ve hře: Eufrat a Tigris s kanály a přítoky, města raně dynastického období a cesty mezi nimi. Mapa se kreslí z dat datadisku Gilgameš, takže roste spolu s hrou.",
-  "map_alt": "Mapa Sumeru s Eufratem, Tigridem, městy (Uruk označený hvězdou), kanály a cestami."
+  "map_alt": "Mapa Sumeru s Eufratem, Tigridem, městy (Uruk označený hvězdou), kanály a cestami.",
+  "dl_f_windows": "Windows x86-64 (nepodepsaný)",
+  "dl_f_macos": "macOS, Apple Silicon i Intel (nepodepsaný)"
 }
