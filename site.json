@@ -18,9 +18,9 @@
     "ishtaria-admin",
     "ishtaria-worldgen",
     "ishtaria-content",
-    "ishtaria-datadisk-endland",
     "ishtaria-datadisk-gilgamesh",
     "ishtaria-datadisk-tutorial",
+    "ishtaria-datadisk-endland",
     "ishtaria-protocol",
     "ishtaria-doc"
   ],

@@ -18,8 +18,8 @@
   "feat_4_h": "Open source",
   "feat_4_p": "Server, client, generator, content and protocol are open. Run your own world and tell stories on it with datadisks.",
   "shots_title": "In-game screenshots",
-  "shot_1_alt": "A graveyard at the edge of a town, with Faust Grimes, one of the characters of the first story datadisk.",
-  "shot_2_alt": "Walking the generated surface: low-poly trees, graves and the HUD with health, stamina, food and water.",
+  "shot_1_alt": "The stepped tower of Ishtar in the sacred precinct of Uruk, with the goddess and her priests on its top platform.",
+  "shot_2_alt": "The great market of Uruk, with its crowd of named townspeople.",
   "status_title": "Project status",
   "status_p": "Ishtaria is under active development. Accounts, character creation, walking, gathering, towns and story datadisks work; first physical landing, sailing and federation handovers are not finished yet. Expect rough edges.",
   "dl_title": "Download Ishtaria",
@@ -41,8 +41,8 @@
   "pkg_ishtaria-admin": "Text-mode administration of a world server.",
   "pkg_ishtaria-worldgen": "Deterministic planet generator.",
   "pkg_ishtaria-content": "Base content pack: species, items, recipes, biomes.",
-  "pkg_ishtaria-datadisk-endland": "The End Land story datadisk.",
-  "pkg_ishtaria-datadisk-gilgamesh": "The Gilgamesh story datadisk: Early Dynastic Mesopotamia on a reconstructed Earth.",
+  "pkg_ishtaria-datadisk-endland": "A small example datadisk: one town with a tavern.",
+  "pkg_ishtaria-datadisk-gilgamesh": "The Epic of Gilgamesh, the main story datadisk: Uruk and the Early Dynastic world on a reconstructed Earth.",
   "pkg_ishtaria-datadisk-tutorial": "The tutorial datadisk: guided lessons for every implemented feature.",
   "pkg_ishtaria-protocol": "Federation schemas and examples.",
   "pkg_ishtaria-doc": "Documentation in HTML.",
@@ -75,5 +75,9 @@
   "play_limits_p": "The browser build uses the simpler WebGL 2 renderer, so the terrain and the sky look a little different, and it needs a recent browser and a GPU with WebGL 2. Only Debian and Ubuntu are supported for the desktop client; the browser build runs wherever the browser does, without support.",
   "play_host_h": "Offering it from your own site",
   "play_host_p": "The files come in the package ishtaria-client-web; the portal serves them under /play/ when it is installed.",
-  "pkg_ishtaria-client-web": "The game client for the browser (HTML5 / WebAssembly)."
+  "pkg_ishtaria-client-web": "The game client for the browser (HTML5 / WebAssembly).",
+  "story_title": "A story you can walk through",
+  "story_p": "The first full story disk retells the Epic of Gilgamesh on a reconstructed Early Dynastic Earth. You begin as the hunter at a water-hole and walk to Uruk, a walled city drawn from a plan of the real one: ziggurats, thousands of houses, canals, markets and the Euphrates. The people of Uruk speak Czech or English, and what they tell you follows the story you have lived so far.",
+  "shot_3_alt": "Talking to an elder: every character has a portrait, and the story is told in decision trees.",
+  "shot_4_alt": "The map of Uruk: walls and gates, streets, houses, canals and the Euphrates."
 }

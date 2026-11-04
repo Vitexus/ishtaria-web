@@ -71,6 +71,11 @@ def web_client_launch(site):
 def index(t, site):
     prefix = "../" if t["lang"] == "cs" else ""
     launch = web_client_launch(site)
+    shots = "".join(
+        f'<figure><img src="{prefix}screenshot-{name}.jpg" alt="{e(t[f"shot_{i}_alt"])}" width="1200" height="675" loading="lazy">'
+        f'<figcaption>{e(t[f"shot_{i}_alt"])}</figcaption></figure>'
+        for i, name in enumerate(("uruk", "market", "dialogue", "map"), 1)
+    )
     feats = "".join(
         f'<article><h3>{e(t[f"feat_{i}_h"])}</h3><p>{e(t[f"feat_{i}_p"])}</p></article>'
         for i in range(1, 5)
@@ -79,9 +84,8 @@ def index(t, site):
 <p class="lead">{e(t["home_lead"])}</p>
 <p><a class="button" href="download.html">{e(t["home_cta"])}</a> <a class="button" href="{e(launch)}">{e(t["home_cta_play"])}</a></p></section>
 <section><h2>{e(t["feat_title"])}</h2><div class="grid">{feats}</div></section>
-<section><h2>{e(t["shots_title"])}</h2><div class="shots">
-<figure><img src="{prefix}screenshot-graveyard.jpg" alt="{e(t["shot_1_alt"])}" width="1200" height="675"><figcaption>{e(t["shot_1_alt"])}</figcaption></figure>
-<figure><img src="{prefix}screenshot-surface.jpg" alt="{e(t["shot_2_alt"])}" width="1200" height="675"><figcaption>{e(t["shot_2_alt"])}</figcaption></figure></div></section>
+<section><h2>{e(t["story_title"])}</h2><p class="lead">{e(t["story_p"])}</p></section>
+<section><h2>{e(t["shots_title"])}</h2><div class="shots">{shots}</div></section>
 <section class="note"><h2>{e(t["status_title"])}</h2><p>{e(t["status_p"])}</p></section>"""
 
 
