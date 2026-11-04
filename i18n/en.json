@@ -85,5 +85,17 @@
   "support_p": "Ishtaria is built by a small team in its spare time and it is free to play. If you enjoy it, you can support the development on Patreon. Money is not the only way to help: report bugs, translate the game, write a story datadisk or send a patch (each repository has a CONTRIBUTING.md), and tell other players about it.",
   "support_cta": "Support on Patreon",
   "support_code": "Contribute on Forgejo",
-  "footer_support": "Support"
+  "footer_support": "Support",
+  "start_title": "Where to start",
+  "start_p": "New here? These are real gaps in the current game, each a good first contribution. Ask in an issue before you begin a bigger one.",
+  "start_1": "Play the first quest of the Gilgamesh datadisk and report what is confusing, broken or ugly (an issue with a screenshot is a real contribution).",
+  "start_2": "Proofread the English and Czech texts, or add a third language to the client's translations.",
+  "start_3": "Write a small story datadisk: a place, a character and a short dialogue (the format is described in the protocol repository and checked by a validator).",
+  "start_4": "Add a \"Tell me about yourself\" knowledge card to the characters of Uruk that do not have one yet.",
+  "start_5": "Add counter achievements, for example felling a hundred trees (there are only one-time milestones now).",
+  "start_6": "Show the mood of a character above their head: the Emotes Pack is bundled but not used yet.",
+  "start_7": "Let a character sleep in a placed bedroll, and give placed objects collisions.",
+  "start_8": "Lay roads from the other gates of Uruk to the neighbouring cities (the generator tool already exists, only the legs are missing).",
+  "start_9": "Add blocking of players and message requests to the chat.",
+  "start_10": "Improve the tests: more PostgreSQL integration tests for the server, or visual checks of the client windows."
 }

@@ -38,3 +38,6 @@ footer { color:var(--muted); font-size:.9rem; border-top:1px solid var(--line); 
 form input[type="text"] { font: inherit; padding: .5rem .6rem; max-width: 100%; margin: .25rem .5rem .25rem 0; }
 button.button { font: inherit; cursor: pointer; border: 0; }
 
+
+ol.start { padding-left:1.4rem; }
+ol.start li { margin:.45rem 0; }

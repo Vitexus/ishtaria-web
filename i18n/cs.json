@@ -85,5 +85,17 @@
   "support_p": "Ishtaria vzniká v malém týmu ve volném čase a hraje se zdarma. Pokud vás baví, můžete vývoj podpořit na Patreonu. Pomoci se dá i jinak než penězi: hlaste chyby, překládejte hru, napište příběhový datadisk nebo pošlete záplatu (každý repozitář má CONTRIBUTING.md) a řekněte o hře dalším hráčům.",
   "support_cta": "Podpořit na Patreonu",
   "support_code": "Přispět na Forgejo",
-  "footer_support": "Podpora"
+  "footer_support": "Podpora",
+  "start_title": "Kde začít",
+  "start_p": "Jste tu noví? Tohle jsou skutečné mezery dnešní hry, každá se hodí jako první příspěvek. U větší věci se raději nejdřív zeptejte v hlášení.",
+  "start_1": "Zahrajte si první quest datadisku Gilgameš a napište, co je nejasné, rozbité nebo ošklivé (hlášení se snímkem obrazovky je skutečný příspěvek).",
+  "start_2": "Zkontrolujte české a anglické texty, nebo přidejte do klienta třetí jazyk.",
+  "start_3": "Napište malý příběhový datadisk: místo, postavu a krátký dialog (formát popisuje repozitář protokolu a kontroluje ho validátor).",
+  "start_4": "Doplňte kartu „Řekni mi o sobě“ postavám Uruku, které ji ještě nemají.",
+  "start_5": "Přidejte počítadlové úspěchy, třeba pokácení sta stromů (dnes jsou jen jednorázové milníky).",
+  "start_6": "Zobrazte náladu postavy nad hlavou: balík Emotes Pack je v klientovi, ale zatím se nepoužívá.",
+  "start_7": "Umožněte postavě spát na položené podložce a dejte položeným předmětům kolize.",
+  "start_8": "Veďte cesty z dalších bran Uruku do sousedních měst (nástroj generátoru už existuje, chybí jen úseky).",
+  "start_9": "Přidejte do chatu blokování hráčů a žádosti o zprávu.",
+  "start_10": "Vylepšete testy: více integračních testů serveru s PostgreSQL, nebo vizuální kontroly oken klienta."
 }

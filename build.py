@@ -76,6 +76,7 @@ def index(t, site):
         f'<figcaption>{e(t[f"shot_{i}_alt"])}</figcaption></figure>'
         for i, name in enumerate(("uruk", "market", "quay", "dialogue", "map"), 1)
     )
+    start = "".join(f'<li>{e(t[f"start_{i}"])}</li>' for i in range(1, 11))
     feats = "".join(
         f'<article><h3>{e(t[f"feat_{i}_h"])}</h3><p>{e(t[f"feat_{i}_p"])}</p></article>'
         for i in range(1, 5)
@@ -88,6 +89,7 @@ def index(t, site):
 <section><h2>{e(t["shots_title"])}</h2><div class="shots">{shots}</div></section>
 <section><h2>{e(t["support_title"])}</h2><p class="lead">{e(t["support_p"])}</p>
 <p><a class="button" href="{e(site["patreon"])}" rel="noopener">{e(t["support_cta"])}</a> <a class="button" href="{e(site["github"])}">{e(t["support_code"])}</a></p></section>
+<section><h2>{e(t["start_title"])}</h2><p>{e(t["start_p"])}</p><ol class="start">{start}</ol></section>
 <section class="note"><h2>{e(t["status_title"])}</h2><p>{e(t["status_p"])}</p></section>"""
 
 

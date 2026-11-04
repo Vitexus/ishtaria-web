@@ -1,3 +1,9 @@
+ishtaria-web (0.2.2) unstable; urgency=medium
+
+  * A list of ten first contributions for newcomers on the home page.
+
+ -- Vítězslav Dvořák <cybervitexus@gmail.com>  Wed, 04 Nov 2026 13:40:08 +0100
+
 ishtaria-web (0.2.1) unstable; urgency=medium
 
   * Patreon link and a section about supporting the development.
