@@ -78,6 +78,7 @@
   "pkg_ishtaria-client-web": "The game client for the browser (HTML5 / WebAssembly).",
   "story_title": "A story you can walk through",
   "story_p": "The first full story disk retells the Epic of Gilgamesh on a reconstructed Early Dynastic Earth. You begin as the hunter at a water-hole and walk to Uruk, a walled city drawn from a plan of the real one: ziggurats, thousands of houses, canals, markets and the Euphrates. The people of Uruk speak Czech or English, and what they tell you follows the story you have lived so far.",
-  "shot_3_alt": "Talking to an elder: every character has a portrait, and the story is told in decision trees.",
-  "shot_4_alt": "The map of Uruk: walls and gates, streets, houses, canals and the Euphrates."
+  "shot_3_alt": "The quay of Uruk at the river gate, seen from the far bank of the Euphrates.",
+  "shot_4_alt": "Talking to an elder: every character has a portrait, and the story is told in decision trees.",
+  "shot_5_alt": "The map of Uruk: walls and gates, streets, houses, canals and the Euphrates."
 }

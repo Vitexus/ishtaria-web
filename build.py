@@ -74,7 +74,7 @@ def index(t, site):
     shots = "".join(
         f'<figure><img src="{prefix}screenshot-{name}.jpg" alt="{e(t[f"shot_{i}_alt"])}" width="1200" height="675" loading="lazy">'
         f'<figcaption>{e(t[f"shot_{i}_alt"])}</figcaption></figure>'
-        for i, name in enumerate(("uruk", "market", "dialogue", "map"), 1)
+        for i, name in enumerate(("uruk", "market", "quay", "dialogue", "map"), 1)
     )
     feats = "".join(
         f'<article><h3>{e(t[f"feat_{i}_h"])}</h3><p>{e(t[f"feat_{i}_p"])}</p></article>'
