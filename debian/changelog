@@ -1,3 +1,10 @@
+ishtaria-web (0.2.8) unstable; urgency=medium
+
+  * English lead text: An engine for more than just your own virtual
+    world.
+
+ -- Vítězslav Dvořák <cybervitexus@gmail.com>  Wed, 04 Nov 2026 15:28:41 +0100
+
 ishtaria-web (0.2.7) unstable; urgency=medium
 
   * Downloads from the GitHub mirror release 0.5.1; every page says that
