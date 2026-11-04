@@ -56,5 +56,6 @@
   "web_client": {
     "path": "/play/",
     "default_server": "/api"
-  }
+  },
+  "patreon": "https://patreon.com/VitexSoftware"
 }

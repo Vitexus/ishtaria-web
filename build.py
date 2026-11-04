@@ -52,7 +52,7 @@ def layout(t, site, lang, page, body):
 {body}
 </main>
 <footer><p>{e(t["footer_license"])}</p>
-<p><a href="{e(site["github"])}">GitHub</a></p></footer>
+<p><a href="{e(site["github"])}">GitHub</a> · <a href="{e(site["patreon"])}" rel="noopener">Patreon – {e(t["footer_support"])}</a></p></footer>
 </body>
 </html>
 """
@@ -86,6 +86,8 @@ def index(t, site):
 <section><h2>{e(t["feat_title"])}</h2><div class="grid">{feats}</div></section>
 <section><h2>{e(t["story_title"])}</h2><p class="lead">{e(t["story_p"])}</p></section>
 <section><h2>{e(t["shots_title"])}</h2><div class="shots">{shots}</div></section>
+<section><h2>{e(t["support_title"])}</h2><p class="lead">{e(t["support_p"])}</p>
+<p><a class="button" href="{e(site["patreon"])}" rel="noopener">{e(t["support_cta"])}</a> <a class="button" href="{e(site["github"])}">{e(t["support_code"])}</a></p></section>
 <section class="note"><h2>{e(t["status_title"])}</h2><p>{e(t["status_p"])}</p></section>"""
 
 

@@ -80,5 +80,10 @@
   "story_p": "The first full story disk retells the Epic of Gilgamesh on a reconstructed Early Dynastic Earth. You begin as the hunter at a water-hole and walk to Uruk, a walled city drawn from a plan of the real one: ziggurats, thousands of houses, canals, markets and the Euphrates. The people of Uruk speak Czech or English, and what they tell you follows the story you have lived so far.",
   "shot_3_alt": "The quay of Uruk at the river gate, seen from the far bank of the Euphrates.",
   "shot_4_alt": "Talking to an elder: every character has a portrait, and the story is told in decision trees.",
-  "shot_5_alt": "The map of Uruk: walls and gates, streets, houses, canals and the Euphrates."
+  "shot_5_alt": "The map of Uruk: walls and gates, streets, houses, canals and the Euphrates.",
+  "support_title": "Support the development",
+  "support_p": "Ishtaria is built by a small team in its spare time and it is free to play. If you enjoy it, you can support the development on Patreon. Money is not the only way to help: report bugs, translate the game, write a story datadisk or send a patch (each repository has a CONTRIBUTING.md), and tell other players about it.",
+  "support_cta": "Support on Patreon",
+  "support_code": "Contribute on Forgejo",
+  "footer_support": "Support"
 }
