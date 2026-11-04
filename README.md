@@ -62,7 +62,7 @@ conffiles that are not enabled automatically. Enable one and put TLS in front be
 dpkg-buildpackage -us -uc -b
 ```
 
-CI: `.github/workflows/ci.yml` and `debian/Jenkinsfile`.
+CI: `.github/workflows/ci.yml` (the tests, on the GitHub mirror) and `debian/Jenkinsfile` (the package, built from the primary repository).
 
 ## License
 
