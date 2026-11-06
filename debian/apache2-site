@@ -37,7 +37,7 @@
     </Location>
 
     # A game server for the browser client on THIS origin, so that it needs no CORS and no mixed content.
-    # The portal links to /play/?server=/api by default (see site.json web_client.default_server).
+    # The portal links to /play/?server=/api by default (see the links in site/index.html).
     # Uncomment (needs mod_proxy and mod_proxy_http) and point it at your server.
     # Also redirect bare /play/ so a visitor without ?server= does not hit localhost:
     #   RewriteEngine On

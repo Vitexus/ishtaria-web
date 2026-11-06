@@ -1,15 +1,9 @@
-PREFIX ?= /usr
+.PHONY: all test serve
 
-.PHONY: all html test serve clean
-
-all html:
-	python3 build.py build/html
+all: test
 
 test:
-	python3 tests/check.py
+	sh tests/check.sh
 
-serve: html
-	python3 -m http.server --directory build/html 8080
-
-clean:
-	rm -rf build
+serve:
+	node serve.js

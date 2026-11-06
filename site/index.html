@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Návrh webu Ishtaria</title>
+<meta name="description" content="Najdi nesmrtelnost. Online svět na planetě velikosti Země. Zdarma, hraje se přímo v prohlížeči.">
+<link rel="icon" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Jen pro ukázku: ostrý web bude mít písma i knihovnu Three.js u sebe (ADR 0011). -->
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Manrope:wght@400;500;700&family=Alegreya:ital@1&display=swap" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+<style>
+:root {
+  /* Živý Uruk v pozadí, nad ním plovoucí sklo. Barvy z rozhraní hry: lapis, zlato, karneol. */
+  --ink: #f6f1e4;
+  --dim: #c3cbe0;
+  --gold: #e0b04a;
+  --gold-hi: #ffd77a;
+  --lapis: #142a63;
+  --carnelian: #c0502f;
+  --glass: rgba(9, 16, 38, .46);
+  --glass-hi: rgba(255, 255, 255, .16);
+  --display: "Chakra Petch", "Segoe UI", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --quote: "Alegreya", Georgia, serif;
+  --edge: clamp(14px, 3.4vw, 48px);
+  --max: 1320px;
+  --r: 22px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+body { margin: 0; background: #0a1230; color: var(--ink); font: 400 1.03rem/1.55 var(--body); overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+a { color: var(--gold-hi); text-underline-offset: 3px; }
+a:hover { color: #fff; }
+:focus-visible { outline: 3px solid var(--gold-hi); outline-offset: 3px; border-radius: 6px; }
+h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; }
+h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); line-height: 1.05; font-weight: 700; letter-spacing: -.005em; }
+h3 { font-size: 1.28rem; line-height: 1.2; font-weight: 600; }
+p { margin: 0; }
+.wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding-inline: var(--edge); }
+
+/* Svět v pozadí */
+.world, .world > * { position: fixed; inset: 0; width: 100%; height: 100%; }
+.world { z-index: -2; background: linear-gradient(#1f3a7c, #a76a63 58%, #f6b65f 70%, #1b1712 71%); overflow: hidden; }
+.still { object-fit: cover; object-position: 62% 60%; opacity: 0; transition: opacity 1s linear; }
+#scene { opacity: 0; transition: opacity 1.4s; }
+#scene.on { opacity: 1; }
+#veil { position: fixed; inset: 0; z-index: -1; background: #060c22; opacity: 0; pointer-events: none; }
+
+/* Sklo */
+.glass { position: relative; background: var(--glass); border-radius: var(--r); -webkit-backdrop-filter: blur(20px) saturate(150%); backdrop-filter: blur(20px) saturate(150%); box-shadow: 0 20px 50px rgba(3, 7, 22, .36), inset 0 0 0 1px var(--glass-hi), inset 0 1px 0 rgba(255, 255, 255, .24); }
+.low-fx .glass { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(9, 16, 38, .84); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .6em; padding: .82em 1.5em; border: 0; border-radius: 14px; font: 700 1.04rem/1.1 var(--display); letter-spacing: .01em; text-decoration: none; cursor: pointer; }
+.btn-gold { background: linear-gradient(180deg, #ffe08f, #e0b04a 60%, #c8922f); color: #1e130d; box-shadow: 0 10px 30px rgba(224, 176, 74, .35), inset 0 1px 0 rgba(255, 255, 255, .6); transition: transform .18s, box-shadow .18s; }
+.btn-gold:hover { color: #1e130d; transform: translateY(-2px); box-shadow: 0 16px 42px rgba(255, 215, 122, .55), inset 0 1px 0 rgba(255, 255, 255, .7); }
+.btn-big { padding: 1em 1.8em; font-size: 1.22rem; border-radius: 16px; }
+.btn-glass { background: rgba(255, 255, 255, .1); color: var(--ink); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .25); }
+.btn-glass:hover { background: rgba(255, 255, 255, .2); color: #fff; }
+.chip { display: inline-flex; align-items: center; gap: .5em; padding: .3em .85em; border-radius: 99px; font: 600 .86rem/1.3 var(--display); letter-spacing: .03em; color: var(--ink); background: rgba(9, 16, 38, .42); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2); }
+.dot { width: .55em; height: .55em; border-radius: 50%; background: #7be39a; box-shadow: 0 0 10px #7be39a; }
+
+/* Lišta */
+.bar { position: fixed; top: 12px; left: 50%; transform: translateX(-50%); z-index: 20; width: min(var(--max), calc(100% - 2 * var(--edge))); display: flex; align-items: center; gap: 1.4rem; padding: .5rem .55rem .5rem 1rem; border-radius: 18px; }
+.brand { display: flex; align-items: center; gap: .55rem; font: 700 1.28rem var(--display); letter-spacing: .1em; color: var(--ink); text-decoration: none; text-transform: uppercase; }
+.brand img { width: 34px; height: 34px; border-radius: 50%; }
+.bar nav { display: flex; gap: 1.5rem; margin-left: auto; align-items: center; }
+.bar nav a:not(.btn) { color: var(--ink); text-decoration: none; font-weight: 500; font-size: .98rem; }
+.bar nav a:not(.btn):hover { color: var(--gold-hi); }
+.bar .btn { padding: .62em 1.3em; font-size: .98rem; }
+.menu { display: none; margin-left: auto; position: relative; }
+.menu summary { list-style: none; cursor: pointer; padding: .5em 1em; border-radius: 12px; background: rgba(255, 255, 255, .12); font-weight: 700; }
+.menu summary::-webkit-details-marker { display: none; }
+.menu nav { position: absolute; right: 0; top: calc(100% + 10px); flex-direction: column; align-items: stretch; gap: 0; min-width: 200px; padding: .5rem; background: rgba(9, 16, 38, .95); border-radius: 14px; box-shadow: inset 0 0 0 1px var(--glass-hi); }
+.menu nav a { padding: .55rem .8rem; }
+
+/* Úvod */
+.hero { position: relative; min-height: max(100vh, 700px); display: flex; flex-direction: column; justify-content: space-between; padding: 96px 0 22px; }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(70% 62% at 16% 30%, rgba(8, 14, 36, .55), rgba(8, 14, 36, 0) 100%); }
+.hero h1 { font-size: clamp(2.8rem, 7.1vw, 6.3rem); line-height: .96; font-weight: 700; letter-spacing: -.012em; text-transform: uppercase; margin: .7rem 0 1.1rem -.03em; text-shadow: 0 4px 30px rgba(3, 7, 22, .55), 0 1px 2px rgba(3, 7, 22, .5); }
+.pitch { max-width: 560px; padding: 1.25rem 1.4rem 1.35rem; }
+.pitch p { font-size: 1.17rem; line-height: 1.45; }
+.cta { display: flex; flex-wrap: wrap; align-items: center; gap: .7rem; margin-top: 1rem; }
+.cta small { color: var(--dim); font-size: .92rem; line-height: 1.35; flex: 1 1 220px; }
+.phone-only { display: none !important; }
+.sendlink { margin-top: .9rem; }
+.sendlink .row { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .75rem; }
+.teasers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 28px; }
+.teaser { display: flex; flex-direction: column; gap: .15rem; padding: .85rem 1.15rem; color: var(--ink); text-decoration: none; transition: transform .2s, box-shadow .2s; }
+.teaser:hover { transform: translateY(-3px); color: #fff; box-shadow: 0 24px 50px rgba(3, 7, 22, .45), inset 0 0 0 1px rgba(255, 215, 122, .6), inset 0 1px 0 rgba(255, 255, 255, .3); }
+.teaser b { font: 700 1.15rem var(--display); color: var(--gold-hi); }
+.teaser span { font-size: .95rem; color: var(--dim); line-height: 1.35; }
+
+/* Mřížka dlaždic */
+section { padding-block: clamp(36px, 5vw, 64px); }
+.sec-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: .5rem 2rem; margin-bottom: 1.1rem; text-shadow: 0 2px 22px rgba(3, 7, 22, .75); }
+.sec-head p { max-width: 36rem; font-size: 1.08rem; color: var(--ink); }
+.bento { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 14px; }
+.tile { padding: 1.25rem 1.35rem; min-width: 0; }
+.s12 { grid-column: span 12; } .s8 { grid-column: span 8; } .s7 { grid-column: span 7; } .s6 { grid-column: span 6; } .s5 { grid-column: span 5; } .s4 { grid-column: span 4; }
+.big-n { font: 700 clamp(2.3rem, 4vw, 3.3rem)/1 var(--display); color: var(--gold-hi); letter-spacing: -.01em; }
+.tile h3 { margin: .35rem 0 .35rem; }
+.tile p { color: var(--ink); opacity: .9; }
+
+/* Snímky ze hry */
+.shots { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+.shot-stage { position: relative; aspect-ratio: 16 / 9; background: #0a1230; cursor: zoom-in; border: 0; padding: 0; width: 100%; display: block; }
+.shot-stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .8s; }
+.shot-stage img.on { opacity: 1; }
+.shot-foot { padding: .85rem 1.2rem 1.05rem; display: grid; gap: .55rem; }
+.shot-cap { font-weight: 500; min-height: 2.9em; }
+.shot-note { font-size: .93rem; color: var(--dim); }
+.pager { display: flex; gap: .4rem; }
+.pager button { width: 30px; height: 6px; padding: 0; border: 0; border-radius: 3px; background: rgba(255, 255, 255, .25); cursor: pointer; }
+.pager button[aria-current="true"] { background: var(--gold-hi); }
+dialog.lb { border: 0; padding: 0; background: transparent; max-width: 96vw; max-height: 96vh; color: var(--ink); }
+dialog.lb::backdrop { background: rgba(4, 8, 23, .93); }
+dialog.lb img { max-height: 84vh; width: auto; margin: auto; border-radius: 10px; }
+.lb-bar { display: flex; justify-content: center; gap: .6rem; margin-top: .7rem; }
+
+/* Rozhovor */
+.talk { display: flex; flex-direction: column; }
+.talk-head { display: flex; gap: .9rem; align-items: flex-start; margin: .3rem 0 .4rem; }
+.portrait { flex: none; width: 76px; height: 76px; border-radius: 14px; background: url(img/screenshot-dialogue-full.jpg) -209px -220px / 760px auto; box-shadow: inset 0 0 0 1px var(--glass-hi); }
+#line { min-height: 8em; font-size: 1rem; line-height: 1.45; }
+.choices { display: grid; gap: .35rem; margin-top: auto; padding-top: .7rem; }
+.choices button { text-align: left; padding: .5em .8em; background: rgba(255, 255, 255, .08); border: 0; border-radius: 10px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14); color: var(--ink); font: 500 .96rem/1.3 var(--body); cursor: pointer; }
+.choices button:hover, .choices button:focus-visible { background: rgba(255, 215, 122, .2); box-shadow: inset 0 0 0 1px var(--gold-hi); }
+.voice { align-self: flex-start; background: none; border: 0; padding: 0; color: var(--gold-hi); font: 600 .93rem var(--body); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.voice-msg { display: block; font-size: .88rem; color: var(--dim); }
+
+.pills { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .6rem; }
+
+/* Příběh */
+.quote { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 44px); align-items: center; padding: clamp(22px, 3vw, 38px); }
+.q-text { font: 600 clamp(1.3rem, 2.3vw, 1.95rem)/1.25 var(--display); min-height: 4.2em; }
+.q-akk { margin-top: .7rem; font: italic 400 1.14rem/1.35 var(--quote); color: var(--gold-hi); min-height: 2.8em; }
+.counts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; }
+.counts div b { display: block; font: 700 clamp(1.35rem, 2.1vw, 1.85rem)/1.05 var(--display); color: var(--gold-hi); }
+.counts div span { font-size: .93rem; color: var(--dim); line-height: 1.3; display: block; }
+
+/* Mapa */
+.map-tile { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); padding: 0; overflow: hidden; }
+.map { position: relative; overflow: hidden; min-height: 460px; background: #94b9d5; }
+.map-in { position: absolute; left: 0; top: 0; width: 100%; aspect-ratio: 1377 / 1466; transition: transform .75s cubic-bezier(.3, .7, .2, 1); transform-origin: 0 0; }
+.map-in img { width: 100%; height: auto; }
+.pin { position: absolute; width: 24px; height: 24px; margin: -12px 0 0 -12px; border-radius: 50%; border: 2px solid #8d2d12; background: rgba(224, 101, 58, .35); cursor: pointer; padding: 0; transform: scale(calc(1 / var(--z, 1))); transition: transform .75s; }
+.pin.on { background: rgba(224, 101, 58, .85); border-color: #fff; box-shadow: 0 0 0 4px rgba(224, 101, 58, .4); }
+.map-side { padding: 1.3rem 1.4rem; display: flex; flex-direction: column; gap: .7rem; }
+.cities { display: flex; flex-wrap: wrap; gap: .35rem; padding: 0; margin: 0; list-style: none; }
+.cities button { padding: .25em .75em; background: rgba(255, 255, 255, .1); border: 0; border-radius: 99px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18); color: var(--ink); font: 500 .92rem var(--body); cursor: pointer; }
+.cities button[aria-pressed="true"] { background: var(--gold); color: #1e130d; font-weight: 700; }
+#city-name { font-size: 1.9rem; color: var(--gold-hi); }
+#city-text { min-height: 5.8em; }
+#city-source { color: var(--dim); font-size: .92rem; }
+
+/* Jak začít */
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; counter-reset: st; }
+.step { counter-increment: st; }
+.step::before { content: counter(st); display: inline-grid; place-items: center; width: 2rem; height: 2rem; border-radius: 10px; background: rgba(255, 215, 122, .18); color: var(--gold-hi); font: 700 1.05rem var(--display); box-shadow: inset 0 0 0 1px rgba(255, 215, 122, .5); }
+.os { display: flex; gap: .3rem; margin: .8rem 0; }
+.os button { flex: 1; padding: .45em; background: rgba(255, 255, 255, .08); border: 0; border-radius: 10px; color: var(--ink); font: 600 .95rem var(--body); cursor: pointer; }
+.os button[aria-selected="true"] { background: var(--gold); color: #1e130d; }
+.code { position: relative; margin-top: .6rem; }
+pre { margin: 0; padding: .75rem .9rem; overflow-x: auto; background: rgba(3, 7, 22, .55); border-radius: 12px; font: .84rem/1.5 ui-monospace, Consolas, monospace; }
+.copy { position: absolute; top: .35rem; right: .35rem; background: rgba(255, 255, 255, .14); color: var(--ink); border: 0; border-radius: 8px; padding: .15em .6em; font: 600 .84rem var(--body); cursor: pointer; }
+.pane p + p { margin-top: .5rem; }
+.pane .btn { margin-top: .7rem; }
+
+/* Podpora a stav */
+.support { display: grid; grid-template-columns: minmax(0, 1.5fr) auto; gap: 1rem 2.5rem; align-items: center; padding: clamp(22px, 3vw, 36px); background: linear-gradient(120deg, rgba(192, 80, 47, .5), rgba(20, 42, 99, .55)); }
+.support h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); }
+.support p { margin-top: .5rem; max-width: 42rem; }
+details.state { margin-top: 14px; padding: 1rem 1.35rem; }
+details.state summary { cursor: pointer; font: 600 1.08rem var(--display); }
+.road { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.4rem; margin-top: 1rem; }
+.road b { font: 700 1.02rem var(--display); }
+.road ul { margin: .4rem 0 0; padding-left: 1.1rem; font-size: .96rem; display: grid; gap: .25rem; }
+
+footer { margin-top: 18px; padding: 1.2rem 0 1.8rem; font-size: .92rem; color: var(--dim); text-shadow: 0 1px 8px #000; }
+footer .wrap { display: grid; gap: .3rem; }
+
+@media (max-width: 1040px) {
+  .s4, .s5, .s6, .s7, .s8 { grid-column: span 12; }
+  .counts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .quote { grid-template-columns: minmax(0, 1fr); }
+  .map-tile { grid-template-columns: minmax(0, 1fr); }
+  .map { min-height: 0; aspect-ratio: 1 / .92; }
+  .bar nav.main-nav { display: none; }
+  .menu { display: block; }
+  .steps { grid-template-columns: minmax(0, 1fr); }
+  .support { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  .teasers { grid-template-columns: minmax(0, 1fr); }
+  .counts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hero { padding-top: 84px; }
+  .glass { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(9, 16, 38, .74); }
+  .bar.glass { background: rgba(9, 16, 38, .94); }
+  #line { min-height: 11em; }
+}
+/* Telefon nebo tablet bez klávesnice: hra se hraje na počítači */
+html.touch .pc-only { display: none !important; }
+html.touch .phone-only { display: revert !important; }
+html.touch .phone-only.sendlink { display: block !important; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
+</style>
+<script>
+/* Na dotykovém zařízení bez myši se hra nehraje: rozhodnout dřív, než se stránka vykreslí */
+if (matchMedia('(pointer: coarse)').matches && !matchMedia('(pointer: fine)').matches) document.documentElement.classList.add('touch');
+</script>
+</head>
+<body>
+
+<div class="world" aria-hidden="true">
+  <img class="still" src="img/scene-sunset.webp" alt="" data-phi="0.48" style="opacity:1">
+  <img class="still" src="img/scene-night.webp" alt="" data-phi="0.72">
+  <img class="still" src="img/scene-morning.webp" alt="" data-phi="0.08">
+  <img class="still" src="img/scene-day.webp" alt="" data-phi="0.25">
+  <canvas id="scene"></canvas>
+</div>
+<div id="veil"></div>
+
+<header class="bar glass">
+  <a class="brand" href="#uvod"><img src="img/logo.png" alt="" width="34" height="34">Ishtaria</a>
+  <span class="chip">Návrh</span>
+  <nav class="main-nav" aria-label="Hlavní menu">
+    <a href="#svet">Svět</a><a href="#pribeh">Příběh</a><a href="#mapa">Mapa</a><a href="#zacit">Jak začít</a><a href="#podpora">Podpora</a>
+    <a class="btn btn-gold pc-only" href="https://ishtaria.vitexsoftware.com/play/?server=/api">Hrát hned</a>
+  </nav>
+  <details class="menu">
+    <summary>Menu</summary>
+    <nav aria-label="Menu na telefonu">
+      <a href="#svet">Svět</a><a href="#pribeh">Příběh</a><a href="#mapa">Mapa</a><a href="#zacit">Jak začít</a><a href="#podpora">Podpora</a>
+    </nav>
+  </details>
+</header>
+
+<main>
+<div class="hero" id="uvod">
+  <div class="wrap">
+    <span class="chip"><span class="dot"></span>Svět běží · Zdarma</span>
+    <h1>Najdi<br>nesmrtelnost</h1>
+    <div class="pitch glass">
+      <p>Online svět na planetě velikosti Země. Začínáš jako lovec v době krále Gilgameše a máš jediný život.</p>
+      <div class="cta pc-only">
+        <a class="btn btn-gold btn-big" href="https://ishtaria.vitexsoftware.com/play/?server=/api">Hrát hned</a>
+        <small>Bez instalace, přímo v prohlížeči. První načtení chvíli trvá.</small>
+      </div>
+      <div class="sendlink phone-only">
+        <p style="font-size:1rem;color:var(--dim)">Hra se hraje na počítači s klávesnicí. Pošli si odkaz a pusť si ji doma.</p>
+        <div class="row">
+          <button type="button" class="btn btn-gold" id="send-share">Pošli si odkaz do počítače</button>
+          <button type="button" class="btn btn-glass" id="send-copy">Kopírovat</button>
+          <a class="btn btn-glass" id="send-mail" href="mailto:?subject=Ishtaria%3A%20zahraj%20si%20na%20po%C4%8D%C3%ADta%C4%8Di&body=https%3A%2F%2Fishtaria.vitexsoftware.com%2F">E-mailem</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="teasers">
+      <a class="teaser glass" href="#pribeh"><b>Příběh</b><span>Nejstarší epos světa. Hraješ ho ty.</span></a>
+      <a class="teaser glass" href="#svet"><b>Svět</b><span>Běží dál, i když jsi zrovna offline.</span></a>
+      <a class="teaser glass" href="#svet"><b>Jeden život</b><span>Zemřeš, a po tobě zůstane jen hrob.</span></a>
+    </div>
+  </div>
+</div>
+
+<section id="svet">
+  <div class="wrap">
+    <div class="sec-head"><h2>Takhle se tam žije</h2></div>
+    <div class="bento">
+      <div class="tile glass shots s7">
+        <button type="button" class="shot-stage" id="shot-stage" aria-label="Zvětšit snímek ze hry">
+          <img class="on" src="img/screenshot-market-full.jpg" alt="Velký trh v Uruku s davem postav" data-cap="Velký trh v Uruku. Každá postava má své jméno.">
+          <img src="img/screenshot-dialogue-full.jpg" alt="Rozhovor se starcem na trhu" loading="lazy" data-cap="Rozhovor se starcem. Příběh se vypráví rozhovory a tvými volbami.">
+          <img src="img/screenshot-quay.jpg" alt="Přístav Uruku přes řeku" loading="lazy" data-cap="Přístav u říční brány, pohled z protějšího břehu Eufratu.">
+          <img src="img/screenshot-uruk-full.jpg" alt="Stupňovitý chrám Ištar" loading="lazy" data-cap="Stupňovitý chrám Ištar v posvátném okrsku.">
+          <img src="img/screenshot-map-full.jpg" alt="Mapa Uruku" loading="lazy" data-cap="Mapa Uruku: hradby, brány, ulice, domy, kanály a Eufrat.">
+        </button>
+        <div class="shot-foot">
+          <div class="pager" id="shot-pager"></div>
+          <p class="shot-cap" id="shot-cap">Velký trh v Uruku. Každá postava má své jméno.</p>
+          <p class="shot-note">Snímky z dnešní verze. Hra je v raném vývoji: nejdřív ladíme mechaniky a obsah, grafika přijde potom.</p>
+        </div>
+      </div>
+      <div class="tile glass talk s5">
+        <span class="chip" style="align-self:flex-start">Zkus si to</span>
+        <div class="talk-head" style="margin-top:.7rem">
+          <div class="portrait" role="img" aria-label="Portrét starce s bílými vousy"></div>
+          <div style="min-width:0">
+            <h3 style="margin:0 0 .25rem">Starý otec</h3>
+            <p id="line"></p>
+          </div>
+        </div>
+        <button type="button" class="voice" id="voice">Poslechnout hlas</button>
+        <span class="voice-msg" id="voice-msg"></span>
+        <div class="choices" id="choices"></div>
+      </div>
+      <div class="tile glass s4">
+        <div class="big-n">1 život</div>
+        <h3>Smrt je napořád</h3>
+        <p>Po postavě zůstane hrob s jejím majetkem. Vykrást ho může kdokoli.</p>
+      </div>
+      <div class="tile glass s4">
+        <div class="big-n">7 dní</div>
+        <h3>Svět na tebe nečeká</h3>
+        <p>Úroda roste a postava hladoví, i když nehraješ. Týden bez jídla ji zabije.</p>
+      </div>
+      <div class="tile glass s4">
+        <div class="big-n">100 zlatých</div>
+        <h3>Zbytek si vyděláš</h3>
+        <p>Dostaneš je jen jednou. Hra je zdarma a za peníze se tu síla koupit nedá.</p>
+      </div>
+      <div class="tile glass s12">
+        <h3 style="margin:0">Co všechno tam můžeš dělat</h3>
+        <div class="pills">
+          <span class="chip">Lovit</span><span class="chip">Těžit a kácet</span><span class="chip">Vyrábět</span><span class="chip">Stavět</span><span class="chip">Pěstovat</span><span class="chip">Rybařit</span><span class="chip">Obchodovat s hráči</span><span class="chip">Učit se magii</span><span class="chip">Plnit questy</span><span class="chip">Mít přátele</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pribeh">
+  <div class="wrap">
+    <div class="sec-head"><h2>Nejstarší příběh na světě</h2><p>Epos o Gilgamešovi, přímo ve hře, česky nebo anglicky. Postavy mluví nahlas a pamatují si, co jsi prožil.</p></div>
+    <div class="quote glass">
+      <div>
+        <p class="q-text" id="q-text"></p>
+        <p class="q-akk" id="q-akk" lang="akk"></p>
+        <div class="pager" id="q-pager" style="margin-top:.9rem"></div>
+      </div>
+      <div class="counts">
+        <div><b>11</b><span>questů v příběhu</span></div>
+        <div><b>189</b><span>postav, 56 z nich se jménem</span></div>
+        <div><b>1 362</b><span>domů ve městě</span></div>
+        <div><b style="white-space:nowrap">2700 př. n. l.</b><span>obloha i pobřeží podle té doby</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="mapa">
+  <div class="wrap">
+    <div class="sec-head"><h2>Skutečný Sumer</h2><p>Města stojí tam, kam je klade historie. Klikni si na ně.</p></div>
+    <div class="map-tile glass">
+      <div class="map"><div class="map-in" id="map-in"><img src="img/sumer-map-cs.jpg" alt="Mapa Sumeru s Eufratem, Tigridem a městy" width="1377" height="1466"></div></div>
+      <div class="map-side">
+        <ul class="cities" id="cities"></ul>
+        <h3 id="city-name"></h3>
+        <p id="city-text"></p>
+        <p id="city-source"></p>
+        <div style="margin-top:auto"><button type="button" class="btn btn-glass" id="map-reset">Celá mapa</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="zacit">
+  <div class="wrap">
+    <div class="sec-head"><h2>Začneš za minutu</h2></div>
+    <div class="steps">
+      <div class="tile glass step"><h3>Klikni na Hrát hned</h3><p>Hra se načte v prohlížeči na počítači. Nic neinstaluješ.</p></div>
+      <div class="tile glass step"><h3>Založ si postavu</h3><p>Stačí účet, jméno a vzhled. Dostaneš nářadí, jídlo a 100 zlatých.</p></div>
+      <div class="tile glass step"><h3>Probuď se u napajedla</h3><p>Do Uruku je to 12 km. Tady začíná tvůj první quest.</p></div>
+    </div>
+    <div class="bento" style="margin-top:14px">
+      <div class="tile glass s7">
+        <span class="chip"><span class="dot"></span>Svět běží</span>
+        <h3 style="margin-top:.7rem">magnymph.vitexsoftware.com</h3>
+        <p>Server 0.5.0 s příběhem Epos o Gilgamešovi. V síni slávy zatím vede Vitex se 110 body. Předběhni ho.</p>
+        <div class="cta pc-only"><a class="btn btn-gold" href="https://ishtaria.vitexsoftware.com/play/?server=/api">Hrát hned</a></div>
+        <h3 style="margin-top:1.3rem">Chceš víc než hrát?</h3>
+        <p><a href="https://ishtaria.vitexsoftware.com/doc/ishtaria-doc/html/quests-and-npcs.html">Napiš vlastní příběh</a> bez programování, nebo <a href="https://ishtaria.vitexsoftware.com/doc/ishtaria-doc/html/operations/installation.html">spusť si vlastní svět</a>. Kód je otevřený.</p>
+      </div>
+      <div class="tile glass s5">
+        <h3 style="margin:0">Radši si hru stáhnout?</h3>
+        <div class="os" role="tablist" aria-label="Operační systém">
+          <button type="button" role="tab" id="os-linux" aria-controls="p-linux" aria-selected="true">Linux</button>
+          <button type="button" role="tab" id="os-win" aria-controls="p-win" aria-selected="false">Windows</button>
+          <button type="button" role="tab" id="os-mac" aria-controls="p-mac" aria-selected="false">macOS</button>
+        </div>
+        <div class="pane" id="p-linux" role="tabpanel" aria-labelledby="os-linux">
+          <p>Debian 13 nebo Ubuntu 26.04. Tohle je plně podporovaná verze.</p>
+          <div class="code">
+            <button type="button" class="copy" data-copy="apt-code">Kopírovat</button>
+<pre id="apt-code">sudo wget -O /usr/share/keyrings/vitexsoftware.gpg \
+  https://repo.vitexsoftware.com/KEY.gpg
+echo "deb [signed-by=/usr/share/keyrings/vitexsoftware.gpg] \
+  https://repo.vitexsoftware.com $(lsb_release -sc) main games" \
+  | sudo tee /etc/apt/sources.list.d/vitexsoftware.list
+sudo apt update && sudo apt install ishtaria-client</pre>
+          </div>
+        </div>
+        <div class="pane" id="p-win" role="tabpanel" aria-labelledby="os-win" hidden>
+          <p>Doporučujeme hrát v prohlížeči. Verze pro Windows není podepsaná ani otestovaná, systém tě před ní varuje.</p>
+          <a class="btn btn-glass" href="https://github.com/Vitexus/ishtaria-client/releases/download/v0.5.1/ishtaria-client.windows-x86_64.exe">Stáhnout pro Windows (0.5.1)</a>
+        </div>
+        <div class="pane" id="p-mac" role="tabpanel" aria-labelledby="os-mac" hidden>
+          <p>Doporučujeme hrát v prohlížeči. Verze pro macOS není podepsaná ani otestovaná, systém tě před ní varuje.</p>
+          <a class="btn btn-glass" href="https://github.com/Vitexus/ishtaria-client/releases/download/v0.5.1/ishtaria-client.macos.zip">Stáhnout pro macOS (0.5.1)</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="podpora">
+  <div class="wrap">
+    <div class="support glass">
+      <div>
+        <h2>Hra je zdarma. Drží ji hráči.</h2>
+        <p>Vzniká v malém týmu ve volném čase. Když se ti líbí, podpoř ji na Patreonu nebo o ní řekni kamarádům. Každý nový hráč pomáhá.</p>
+      </div>
+      <a class="btn btn-gold btn-big" href="https://patreon.com/VitexSoftware">Podpořit na Patreonu</a>
+    </div>
+    <details class="state glass">
+      <summary>Co je hotové a co ještě ne</summary>
+      <div class="road">
+        <div><b>Funguje</b><ul><li>Přežití, sběr, výroba, lov a obchod</li><li>Stavění, farmaření, rybaření a magie</li><li>Chat, přátelé, hroby a trvalá smrt</li><li>Příběhy s hlasem</li></ul></div>
+        <div><b>Rozpracované</b><ul><li>Den, noc a zvířata jsou, roční období zatím ne</li><li>Portály mezi světy jsou, přechod hráče zatím ne</li><li>Grafika se bude ještě hodně měnit</li></ul></div>
+        <div><b>V plánu</b><ul><li>Přistání z vesmíru a plavba lodí</li><li>Dovednosti, počasí a spánek v posteli</li><li>Sdílení úspěchů na sociální sítě</li></ul></div>
+      </div>
+      <p style="margin-top:.9rem"><a href="https://github.com/Vitexus/ishtaria-client/issues">Nahlásit chybu</a> · <a href="https://ishtaria.vitexsoftware.com/doc/ishtaria-doc/html/index.html">Dokumentace</a></p>
+    </details>
+  </div>
+</section>
+</main>
+
+<dialog class="lb" id="lb">
+  <img id="lb-img" src="data:," alt="">
+  <div class="lb-bar">
+    <button type="button" class="btn btn-glass" id="lb-prev">Předchozí</button>
+    <button type="button" class="btn btn-gold" id="lb-close">Zavřít</button>
+    <button type="button" class="btn btn-glass" id="lb-next">Další</button>
+  </div>
+</dialog>
+
+<footer>
+  <div class="wrap">
+    <p>Návrh vzhledu, 5. 11. 2026. Scéna je složená z modelů ze hry (datadisk Gilgameš, 0 A.D.), snímky a texty jsou z projektu.</p>
+    <p>Server AGPL-3.0, kód MIT, obsah a dokumentace CC BY-SA 4.0.</p>
+  </div>
+</footer>
+
+<script type="module">
+const $ = id => document.getElementById(id);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const touch = document.documentElement.classList.contains('touch');
+const thin = (navigator.deviceMemory && navigator.deviceMemory <= 2) || (navigator.connection && navigator.connection.saveData);
+const testStill = new URLSearchParams(location.search).get('still') === '1';
+
+/* Pozadí: počítač dostane živou 3D scénu, telefon a slabé zařízení prolínané snímky stejné scény */
+let sceneApi = null;
+const stills = [...document.querySelectorAll('.still')].sort((a, b) => a.dataset.phi - b.dataset.phi);
+let stillTimer = null;
+function runStills() {
+  if (reduced) return;
+  let t = 0.43;
+  const show = () => {
+    let best = stills[0], bd = 9;
+    for (const s of stills) { const d = Math.min(Math.abs(s.dataset.phi - t), 1 - Math.abs(s.dataset.phi - t)); if (d < bd) { bd = d; best = s; } }
+    stills.forEach(s => { s.style.opacity = s === best ? 1 : 0; });
+  };
+  stills.forEach(s => { s.style.transitionDuration = '6s'; });
+  stillTimer = setInterval(() => { t = (t + 1 / 60) % 1; show(); }, 1000);
+}
+function webglOk() { try { return !!document.createElement('canvas').getContext('webgl2'); } catch { return false; } }
+if (touch || thin || reduced || testStill || !webglOk()) runStills();
+else {
+  import('./scene.js').then(m => m.startScene($('scene'), {
+    capture: new URLSearchParams(location.search).has('freeze'),
+    onReady() { $('scene').classList.add('on'); },
+  })).then(api => { sceneApi = api; window.__sceneApi = api; onScroll(); }).catch(() => runStills());
+}
+
+/* Posun stránky: kamera se zvedá nad město, pozadí se ztlumí kvůli čitelnosti */
+const veil = $('veil');
+function onScroll() {
+  const max = Math.max(document.documentElement.scrollHeight - innerHeight, 1), p = clamp(scrollY / max, 0, 1);
+  sceneApi?.setScroll(p);
+  veil.style.opacity = clamp(scrollY / innerHeight, 0, 1) * 0.3;
+}
+addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+/* Poslat odkaz do počítače */
+const LINK = 'https://ishtaria.vitexsoftware.com/';
+async function copyLink(btn) {
+  const old = btn.textContent;
+  try { await navigator.clipboard.writeText(LINK); btn.textContent = 'Zkopírováno'; }
+  catch { btn.textContent = LINK; }
+  setTimeout(() => { btn.textContent = old; }, 2600);
+}
+$('send-share').addEventListener('click', async e => {
+  if (navigator.share) { try { await navigator.share({ title: 'Ishtaria', text: 'Zahraj si na počítači', url: LINK }); return; } catch (x) { if (x.name === 'AbortError') return; } }
+  copyLink(e.currentTarget);
+});
+$('send-copy').addEventListener('click', e => copyLink(e.currentTarget));
+
+/* Snímky ze hry */
+const stage = $('shot-stage'), shotImgs = [...stage.querySelectorAll('img')], pager = $('shot-pager'), lb = $('lb');
+let shot = 0, shotClock = null;
+function showShot(i) {
+  shot = (i + shotImgs.length) % shotImgs.length;
+  shotImgs.forEach((im, n) => { im.classList.toggle('on', n === shot); if (n === shot) im.loading = 'eager'; });
+  $('shot-cap').textContent = shotImgs[shot].dataset.cap;
+  [...pager.children].forEach((b, n) => b.setAttribute('aria-current', n === shot ? 'true' : 'false'));
+}
+shotImgs.forEach((im, i) => { const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', 'Snímek ' + (i + 1)); b.addEventListener('click', () => { showShot(i); clearInterval(shotClock); }); pager.appendChild(b); });
+showShot(0);
+if (!reduced) shotClock = setInterval(() => showShot(shot + 1), 6000);
+function lbShow() { $('lb-img').src = shotImgs[shot].src; $('lb-img').alt = shotImgs[shot].alt; }
+stage.addEventListener('click', () => { clearInterval(shotClock); lbShow(); lb.showModal(); });
+$('lb-close').addEventListener('click', () => lb.close());
+$('lb-prev').addEventListener('click', () => { showShot(shot - 1); lbShow(); });
+$('lb-next').addEventListener('click', () => { showShot(shot + 1); lbShow(); });
+
+/* Rozhovor: opravdové repliky a hlas ze hry */
+const ELDER = {
+  greet: 'Posaď se, dítě, mé nohy jsou starší než hradba Uruku. „Když bohové byli člověkem,“ začíná stará povídka, a já ji znám tak, jak mi ji vyprávěl otec. Ptej se, povím.',
+  men: 'Nižší bohové čtyřicet let kopali kanály pro velké, pak spálili nářadí a v noci obklíčili Enlilův dům. Enki řekl: ať bohyně rození Mami stvoří člověka z hlíny a krve zabitého boha, aby nosil koše bohů. Jsme tedy hlína a krev boha: proto myslíme a proto pracujeme.',
+  death: 'Bylo nás příliš mnoho a hlučeli jsme, a Enlil nemohl spát. Poslal mor a moudrý Atrachasís obětoval jen bohu moru, který se zastyděl a nechal nás být. Poslal hlad a bůh se zase zastyděl. Pak poslal potopu. Když opadla, Enki nám stanovil míru: některé ženy nerodí, některé jsou dány chrámu a nikdo z nás nežije věčně.',
+  flood: 'Enki nemohl Atrachasíse varovat, protože Enlilovi přísahal. Promluvil tedy k rákosové stěně: „Chýše! Stěno, slyš mě! Rozeber dům, postav loď.“ Atrachasís vzal zvířata i lidi a zavřel dveře. Sedm dní a nocí vála bouře Adadova a i bohové hladověli, protože jim nikdo nenosil chléb. Až uslyšíš vítr v rákosové chýši, dítě, vzpomeň si: stěna poslouchá.'
+};
+const ASK = [['men', 'Jak byli stvořeni lidé?'], ['death', 'Proč umíráme?'], ['flood', 'Pověz mi o potopě.']];
+const VOICE = 'https://ishtaria.vitexsoftware.com/api/story/media/gilgamesh/media/voice/cs/elder_tales_man.';
+let curLine = 'greet', audio = null;
+const stopVoice = () => { if (audio) { audio.pause(); audio = null; } };
+function choices(ended) {
+  const box = $('choices'); box.textContent = '';
+  const add = (t, f) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = t; b.addEventListener('click', f); box.appendChild(b); };
+  if (ended) { add('Posadit se znovu', () => say('greet')); return; }
+  ASK.forEach(a => add(a[1], () => say(a[0])));
+  add('Pokoj s tebou, starý otče.', () => { stopVoice(); $('line').textContent = 'Starý otec přikývne a dál mlčky hledí na trh.'; $('voice').hidden = true; $('voice-msg').textContent = ''; choices(true); });
+}
+function say(k) { stopVoice(); curLine = k; $('line').textContent = ELDER[k]; $('voice').hidden = false; $('voice').textContent = 'Poslechnout hlas'; $('voice-msg').textContent = ''; choices(false); }
+$('voice').addEventListener('click', e => {
+  const b = e.currentTarget;
+  if (audio) { stopVoice(); b.textContent = 'Poslechnout hlas'; return; }
+  audio = new Audio(VOICE + curLine + '.ogg'); b.textContent = 'Zastavit hlas';
+  audio.addEventListener('ended', () => { audio = null; b.textContent = 'Poslechnout hlas'; });
+  audio.play().catch(() => { audio = null; b.textContent = 'Poslechnout hlas'; $('voice-msg').textContent = 'V tomhle náhledu se hlas nenačetl. Na ostrém webu půjde z vlastního serveru.'; });
+});
+say('greet');
+
+/* Úryvky z eposu, přesně jak jsou ve hře */
+const EPIC = [
+  ['Gilgameš obrátil tvář k Utnapištimovi, Vzdálenému, aby se ptal na život a smrt.', 'ana Uta-napišti rūqi — ša balāṭi u mūti'],
+  ['Zápasili jako býci; sloup dveří se chvěl — pak se políbili a stali se přáteli.', 'iṣṣabtūma kīma lītī — ina sūqi ša Uruk'],
+  ['Obrátili tváře k Lesu cedrů, aby skáceli cedr a zabili Humbabu.', 'ana qišti erēni — ana dâki Ḫumbaba'],
+  ['Ištar pozvedla oči ke kráse Gilgameše — Pojď ke mně, buď mým manželem.', 'ana dumqi ša Gilgāmeš — alkam lu ḫāmirī atta'],
+  ['Enkidu ulehl a po dvanáct dní na něm nemoc těžkla.', 'ittatīl Enkidu — 12 ūmī murṣu ikabbitšu'],
+  ['Prohlédni hradby Uruku — terasu základů a pálenou cihlu: to je dílo Gilgameše.', 'ūru ša Uruk — šupšuqat ušši — šipir Gilgāmeš']
+];
+const qp = $('q-pager'); let qi = 0, qClock = null;
+function showQ(i) { qi = (i + EPIC.length) % EPIC.length; $('q-text').textContent = EPIC[qi][0]; $('q-akk').textContent = EPIC[qi][1]; [...qp.children].forEach((b, n) => b.setAttribute('aria-current', n === qi ? 'true' : 'false')); }
+EPIC.forEach((_, i) => { const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', 'Úryvek ' + (i + 1)); b.addEventListener('click', () => { showQ(i); clearInterval(qClock); }); qp.appendChild(b); });
+showQ(0);
+if (!reduced) qClock = setInterval(() => showQ(qi + 1), 8000);
+
+/* Mapa: poloha v pixelech obrázku 1377 × 1466 */
+const CITIES = [
+  ['Uruk', 519, 862, 'Město Gilgameše: hradby, brány, ulice, tisíce domů, kanály, pole a přístav na Eufratu, podle plánu skutečného města.', 'Stojí na svém historickém místě.'],
+  ['Eridu', 610, 1012, '„Adapa z Eridu, kněz Eův, šel na ryby a jižní vítr mu převrhl loď.“', 'Vypráví starý otec v Uruku.'],
+  ['Šuruppak', 486, 726, '„Příběh o Atrachasísovi je v Eridu, v Nippuru a v Šuruppaku.“', 'Vypráví starý otec v Uruku.'],
+  ['Nippur', 415, 622, 'Na cihlových lavicích tu leží hliněné tabulky s příběhy, které si můžeš přečíst.', 'Vypráví starý otec v Uruku.'],
+  ['Kiš', 256, 497, '„Královská moc sestoupila z nebe do Kiše a pastýř Etana neměl syna.“', 'Vypráví starý otec v Uruku.'],
+  ['Babylón', 209, 497, 'Visuté zahrady a socha Gilgameše.', 'Místa z příběhu hry.'],
+  ['Lagaš', 716, 836, 'Město na východ od Uruku, se sochou Gilgameše.', 'Místo z příběhu hry.']
+];
+const mapIn = $('map-in'), pins = [], chips = [];
+function zoomTo(c, Z) {
+  const box = mapIn.parentNode, m = box.clientWidth, h = box.clientHeight, full = m * 1466 / 1377;
+  const tx = clamp(m / 2 - c[1] / 1377 * m * Z, m - m * Z, 0), ty = clamp(h / 2 - c[2] / 1466 * full * Z, Math.min(h - full * Z, 0), 0);
+  mapIn.style.setProperty('--z', Z); mapIn.style.transform = `translate(${tx}px,${ty}px) scale(${Z})`;
+}
+function pick(i, Z) {
+  const c = CITIES[i]; $('city-name').textContent = c[0]; $('city-text').textContent = c[3]; $('city-source').textContent = c[4];
+  pins.forEach((p, n) => p.classList.toggle('on', n === i)); chips.forEach((b, n) => b.setAttribute('aria-pressed', n === i ? 'true' : 'false'));
+  zoomTo(c, Z);
+}
+CITIES.forEach((c, i) => {
+  const p = document.createElement('button'); p.type = 'button'; p.className = 'pin'; p.setAttribute('aria-label', c[0]); p.title = c[0]; p.style.left = c[1] / 13.77 + '%'; p.style.top = c[2] / 14.66 + '%';
+  p.addEventListener('click', () => pick(i, 2.6)); mapIn.appendChild(p); pins.push(p);
+  const li = document.createElement('li'), b = document.createElement('button'); b.type = 'button'; b.textContent = c[0]; b.addEventListener('click', () => pick(i, 2.6)); li.appendChild(b); $('cities').appendChild(li); chips.push(b);
+});
+$('map-reset').addEventListener('click', () => { mapIn.style.transform = ''; mapIn.style.setProperty('--z', 1); });
+pick(0, 1.8);
+
+/* Stažení podle systému */
+const tabs = { linux: 'p-linux', win: 'p-win', mac: 'p-mac' };
+function pickOs(k) { for (const o in tabs) { $('os-' + o).setAttribute('aria-selected', o === k ? 'true' : 'false'); $(tabs[o]).hidden = o !== k; } }
+for (const o in tabs) $('os-' + o).addEventListener('click', () => pickOs(o));
+pickOs(/Windows/.test(navigator.userAgent) ? 'win' : /Mac OS|iPhone|iPad/.test(navigator.userAgent) ? 'mac' : 'linux');
+document.querySelectorAll('.copy').forEach(b => b.addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText($(b.dataset.copy).textContent); b.textContent = 'Zkopírováno'; } catch { b.textContent = 'Označ a zkopíruj ručně'; }
+  setTimeout(() => { b.textContent = 'Kopírovat'; }, 2400);
+}));
+window.__pageReady = true;
+</script>
+</body>
+</html>
